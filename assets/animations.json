@@ -1,0 +1,118 @@
+{
+    "characters": {
+        "character-female-a": {
+            "path": "public/characters/character-female-a.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-female-b": {
+            "path": "public/characters/character-female-b.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-female-c": {
+            "path": "public/characters/character-female-c.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-female-d": {
+            "path": "public/characters/character-female-d.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-female-e": {
+            "path": "public/characters/character-female-e.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-female-f": {
+            "path": "public/characters/character-female-f.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-male-a": {
+            "path": "public/characters/character-male-a.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-male-b": {
+            "path": "public/characters/character-male-b.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-male-c": {
+            "path": "public/characters/character-male-c.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-male-d": {
+            "path": "public/characters/character-male-d.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-male-e": {
+            "path": "public/characters/character-male-e.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        },
+        "character-male-f": {
+            "path": "public/characters/character-male-f.glb",
+            "animations": [
+                { "name": "idle", "index": 1, "duration": 4, "enabled": true },
+                { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
+                { "name": "interact", "index": 24, "loop": "once", "enabled": false }
+            ]
+        }
+    },
+    "aids": {
+        "aid-cane-blind": { "path": "public/characters/aid-cane-blind.glb", "animations": [] },
+        "aid-cane-low-vision": { "path": "public/characters/aid-cane-low-vision.glb", "animations": [] },
+        "aid-cane": { "path": "public/characters/aid-cane.glb", "animations": [] },
+        "aid-crutch": { "path": "public/characters/aid-crutch.glb", "animations": [] },
+        "aid-defibrillator-green": { "path": "public/characters/aid-defibrillator-green.glb", "animations": [] },
+        "aid-defibrillator-red": { "path": "public/characters/aid-defibrillator-red.glb", "animations": [] },
+        "aid-glasses": { "path": "public/characters/aid-glasses.glb", "animations": [] },
+        "aid-mask": { "path": "public/characters/aid-mask.glb", "animations": [] },
+        "aid-sunglasses": { "path": "public/characters/aid-sunglasses.glb", "animations": [] },
+        "aid_hearing": { "path": "public/characters/aid_hearing.glb", "animations": [] }
+    },
+    "wheelchairs": {
+        "wheelchair-deluxe": { "path": "public/characters/wheelchair-deluxe.glb", "animations": [] },
+        "wheelchair-power-deluxe": { "path": "public/characters/wheelchair-power-deluxe.glb", "animations": [] },
+        "wheelchair-power": { "path": "public/characters/wheelchair-power.glb", "animations": [] },
+        "wheelchair": { "path": "public/characters/wheelchair.glb", "animations": [] }
+    }
+}

@@ -4,36 +4,34 @@ import { AnimationMixer, LoopOnce } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default class AnimationComponent extends BaseComponent {
-    constructor(owner, scene, path) {
+    constructor(owner, scene, data) {
         super(owner);
         this.mixer = null;
         this.actions = {};
 
         const loader = new GLTFLoader();
         loader.load(
-            path,
+            data.path,
             (gltf) => {
                 const model = gltf.scene;
                 this.owner.sceneObject.add(model);
                 this.mixer = new AnimationMixer(model);
 
-                const idleAction = this.mixer.clipAction(gltf.animations[1]);
-                idleAction.setDuration(4).play();
-                this.actions['idle'] = idleAction;
-
-                const runAction = this.mixer.clipAction(gltf.animations[2]);
-                runAction.setDuration(0.5).play();
-                this.actions['walk'] = runAction;
-
-                const interactAction = this.mixer.clipAction(
-                    gltf.animations[24],
-                );
-                interactAction.setLoop(LoopOnce);
-                interactAction.clampWhenFinished = true;
-                this.actions['interact'] = interactAction;
-
-                this.actions.walk.enabled = false;
-                this.actions.interact.enabled = false;
+                data.animations.forEach((anim) => {
+                    const action = this.mixer.clipAction(
+                        gltf.animations[anim.index],
+                    );
+                    if (anim.loop === 'once') {
+                        action.setLoop(LoopOnce);
+                        action.clampWhenFinished = true;
+                    }
+                    if (anim.duration) {
+                        action.setDuration(anim.duration);
+                    }
+                    action.play();
+                    this.actions[anim.name] = action;
+                    action.enabled = anim.enabled;
+                });
 
                 model.traverse((c) => {
                     c.castShadow = true;

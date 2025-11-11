@@ -10,14 +10,16 @@ import PlayerInputComponent from '../components/PlayerInputComponent.js';
 import PhysicsComponent from '../components/PhysicsComponent.js';
 import PortalComponent from '../components/PortalComponent.js';
 import AnimationComponent from '../components/AnimationComponent.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 /**
  * Creates the player entity.
  * @param {THREE.Scene} scene - The scene where the player will exist.
  * @param {THREE.Vector3} position - The initial position of the player.
+ * @param {object} animationData - The data for the animation component.
  * @returns {Entity}
  */
-export function createPlayer(scene, position) {
+export function createPlayer(scene, position, animationData) {
     const player = new Entity(scene);
 
     // Set the initial position on the entity's main scene object
@@ -25,13 +27,7 @@ export function createPlayer(scene, position) {
 
     player.addComponent(new PhysicsComponent(player, 5));
     player.addComponent(new PlayerInputComponent(player));
-    player.addComponent(
-        new AnimationComponent(
-            player,
-            scene,
-            'public/characters/character-female-a.glb',
-        ),
-    );
+    player.addComponent(new AnimationComponent(player, scene, animationData));
 
     return player;
 }
@@ -63,4 +59,60 @@ export function createPortal(scene, position, targetState, playerEntity) {
     );
 
     return portal;
+}
+
+/**
+ * Creates a static object from a GLB model.
+ * @param {THREE.Scene} scene - The scene where the object will exist.
+ * @param {object} objectData - The data for the object, including path, position, rotation, and scale.
+ * @returns {Entity}
+ */
+export function createStaticObject(scene, objectData) {
+    const entity = new Entity(scene);
+    const loader = new GLTFLoader();
+
+    loader.load(
+        objectData.path,
+        (gltf) => {
+            const model = gltf.scene;
+            entity.sceneObject.add(model);
+
+            // Set position, rotation, and scale from the object data
+            if (objectData.position) {
+                entity.sceneObject.position.set(
+                    objectData.position.x,
+                    objectData.position.y,
+                    objectData.position.z,
+                );
+            }
+            if (objectData.rotation) {
+                entity.sceneObject.rotation.set(
+                    objectData.rotation.x,
+                    objectData.rotation.y,
+                    objectData.rotation.z,
+                );
+            }
+            if (objectData.scale) {
+                entity.sceneObject.scale.set(
+                    objectData.scale.x,
+                    objectData.scale.y,
+                    objectData.scale.z,
+                );
+            }
+
+            model.traverse((c) => {
+                c.castShadow = true;
+                c.receiveShadow = true;
+            });
+        },
+        undefined,
+        (error) => {
+            console.error(
+                `An error happened while loading model: ${objectData.path}`,
+                error,
+            );
+        },
+    );
+
+    return entity;
 }

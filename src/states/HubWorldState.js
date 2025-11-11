@@ -5,7 +5,12 @@
 
 import * as THREE from 'three';
 import BaseState from './BaseState.js';
-import { createPlayer, createPortal } from '../entities/factories.js';
+import {
+    createPlayer,
+    createPortal,
+    createStaticObject,
+} from '../entities/factories.js';
+import ObjectLoader from '../loaders/ObjectLoader.js';
 
 /**
  * The main hub world of the game, featuring an isometric camera view.
@@ -23,9 +28,14 @@ export default class HubWorldState extends BaseState {
          * @type {import('../entities/Entity.js').default | null}
          */
         this.player = null;
+
+        // Initialize the loader if it doesn't exist on the game object
+        if (!this.game.loader) {
+            this.game.loader = new ObjectLoader();
+        }
     }
 
-    enter() {
+    async enter() {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x222222);
 
@@ -60,8 +70,28 @@ export default class HubWorldState extends BaseState {
         floor.rotation.x = -Math.PI / 2; // Lay the plane flat
         this.scene.add(floor);
 
-        // --- Entities ---
-        const player = createPlayer(this.scene, new THREE.Vector3(0, 1, 0));
+        // --- Load Assets ---
+        await this.game.loader.loadAnimationData('assets/animations.json');
+        const worldData = await this.game.loader.loadWorldData('hub');
+
+        // --- World Scenery ---
+        if (worldData && worldData.objects) {
+            for (const objectData of worldData.objects) {
+                if (objectData.type === 'staticObject') {
+                    const entity = createStaticObject(this.scene, objectData);
+                    this.entities.push(entity);
+                }
+            }
+        }
+
+        // --- Player and Portals ---
+        const animationData =
+            this.game.loader.getAnimationData('character-female-a');
+        const player = createPlayer(
+            this.scene,
+            new THREE.Vector3(0, 1, 0),
+            animationData,
+        );
         this.player = player;
         const portalToGame1 = createPortal(
             this.scene,
