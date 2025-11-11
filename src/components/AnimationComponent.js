@@ -17,7 +17,6 @@ export default class AnimationComponent extends BaseComponent {
 
       const idleAction = this.mixer.clipAction(gltf.animations[1]);
       idleAction.setDuration(4).play();
-      console.log(gltf.animations);
       this.actions['idle'] = idleAction;
 
       const runAction = this.mixer.clipAction(gltf.animations[2]);
