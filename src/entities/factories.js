@@ -18,16 +18,22 @@ import AnimationComponent from '../components/AnimationComponent.js';
  * @returns {Entity}
  */
 export function createPlayer(scene, position) {
-  const player = new Entity(scene);
+    const player = new Entity(scene);
 
-  // Set the initial position on the entity's main scene object
-  player.sceneObject.position.copy(position);
+    // Set the initial position on the entity's main scene object
+    player.sceneObject.position.copy(position);
 
-  player.addComponent(new PhysicsComponent(player, 5));
-  player.addComponent(new PlayerInputComponent(player));
-  player.addComponent(new AnimationComponent(player, scene, "public/characters/character-female-a.glb"));
+    player.addComponent(new PhysicsComponent(player, 5));
+    player.addComponent(new PlayerInputComponent(player));
+    player.addComponent(
+        new AnimationComponent(
+            player,
+            scene,
+            'public/characters/character-female-a.glb',
+        ),
+    );
 
-  return player;
+    return player;
 }
 
 /**
@@ -39,16 +45,22 @@ export function createPlayer(scene, position) {
  * @returns {Entity}
  */
 export function createPortal(scene, position, targetState, playerEntity) {
-  const portal = new Entity(scene);
+    const portal = new Entity(scene);
 
-  const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
-  const material = new THREE.MeshStandardMaterial({ color: 0x8A2BE2, metalness: 0.8, roughness: 0.2 });
-  portal.addComponent(new RenderComponent(portal, geometry, material));
-  
-  // Set the position on the entity's main scene object
-  portal.sceneObject.position.copy(position);
+    const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
+    const material = new THREE.MeshStandardMaterial({
+        color: 0x8a2be2,
+        metalness: 0.8,
+        roughness: 0.2,
+    });
+    portal.addComponent(new RenderComponent(portal, geometry, material));
 
-  portal.addComponent(new PortalComponent(portal, targetState, playerEntity, 2.0));
+    // Set the position on the entity's main scene object
+    portal.sceneObject.position.copy(position);
 
-  return portal;
+    portal.addComponent(
+        new PortalComponent(portal, targetState, playerEntity, 2.0),
+    );
+
+    return portal;
 }

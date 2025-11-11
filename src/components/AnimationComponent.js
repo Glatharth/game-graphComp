@@ -25,7 +25,9 @@ export default class AnimationComponent extends BaseComponent {
                 runAction.setDuration(0.5).play();
                 this.actions['walk'] = runAction;
 
-                const interactAction = this.mixer.clipAction(gltf.animations[24]);
+                const interactAction = this.mixer.clipAction(
+                    gltf.animations[24],
+                );
                 interactAction.setLoop(LoopOnce);
                 interactAction.clampWhenFinished = true;
                 this.actions['interact'] = interactAction;

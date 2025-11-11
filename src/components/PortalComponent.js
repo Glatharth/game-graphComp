@@ -13,37 +13,41 @@ import RenderComponent from './RenderComponent.js';
  * a 'change-state' event if a collision occurs.
  */
 export default class PortalComponent extends BaseComponent {
-  /**
-   * @param {import('../entities/Entity.js').default} owner - The entity to which this component belongs.
-   * @param {string} targetStateName - The name of the state this portal leads to.
-   * @param {import('../entities/Entity.js').default} targetEntity - The entity that can activate the portal (the player).
-   * @param {number} [triggerRadius=1.5] - The distance at which to activate the portal.
-   */
-  constructor(owner, targetStateName, targetEntity, triggerRadius = 1.5) {
-    super(owner);
-    this.targetStateName = targetStateName;
-    this.targetEntity = targetEntity;
-    this.triggerRadius = triggerRadius;
-    this.cooldown = 0;
-  }
-
-  update(deltaTime) {
-    if (this.cooldown > 0) {
-      this.cooldown -= deltaTime;
-      return;
+    /**
+     * @param {import('../entities/Entity.js').default} owner - The entity to which this component belongs.
+     * @param {string} targetStateName - The name of the state this portal leads to.
+     * @param {import('../entities/Entity.js').default} targetEntity - The entity that can activate the portal (the player).
+     * @param {number} [triggerRadius=1.5] - The distance at which to activate the portal.
+     */
+    constructor(owner, targetStateName, targetEntity, triggerRadius = 1.5) {
+        super(owner);
+        this.targetStateName = targetStateName;
+        this.targetEntity = targetEntity;
+        this.triggerRadius = triggerRadius;
+        this.cooldown = 0;
     }
 
-    const renderSelf = this.owner.getComponent(RenderComponent);
-    const renderTarget = this.targetEntity.getComponent(RenderComponent);
+    update(deltaTime) {
+        if (this.cooldown > 0) {
+            this.cooldown -= deltaTime;
+            return;
+        }
 
-    if (renderSelf && renderTarget) {
-      const distance = renderSelf.mesh.position.distanceTo(renderTarget.mesh.position);
+        const renderSelf = this.owner.getComponent(RenderComponent);
+        const renderTarget = this.targetEntity.getComponent(RenderComponent);
 
-      if (distance < this.triggerRadius) {
-        console.log(`Portal activated! Changing to state: ${this.targetStateName}`);
-        eventBus.emit('change-state', this.targetStateName);
-        this.cooldown = 2; // Add a 2-second cooldown to prevent immediate re-triggering
-      }
+        if (renderSelf && renderTarget) {
+            const distance = renderSelf.mesh.position.distanceTo(
+                renderTarget.mesh.position,
+            );
+
+            if (distance < this.triggerRadius) {
+                console.log(
+                    `Portal activated! Changing to state: ${this.targetStateName}`,
+                );
+                eventBus.emit('change-state', this.targetStateName);
+                this.cooldown = 2; // Add a 2-second cooldown to prevent immediate re-triggering
+            }
+        }
     }
-  }
 }
