@@ -3,7 +3,7 @@
  * @module entities/Entity
  */
 
-import RenderComponent from '../components/RenderComponent.js';
+import { Scene, Group } from 'three';
 
 /**
  * Represents an object in the game (player, enemy, item, portal, etc.).
@@ -12,15 +12,23 @@ import RenderComponent from '../components/RenderComponent.js';
  */
 export default class Entity {
   /**
-   * @param {THREE.Scene} scene - The Three.js scene where the entity (or its representation) exists.
+   * @param {Scene} scene - The Three.js scene where the entity (or its representation) exists.
    */
   constructor(scene) {
-    /** @type {THREE.Scene} */
+    /** @type {Scene} */
     this.scene = scene;
     /** @type {import('../components/BaseComponent.js').default[]} */
     this.components = [];
     /** @type {string} */
-    this.id = Math.random().toString(36).substring(2, 9); // Unique ID for debugging
+    // this.id = Math.random().toString(36).substring(2, 9); // Unique ID for debugging
+
+    /**
+     * The root 3D object for this entity in the scene.
+     * Visual components should add their meshes/objects to this group.
+     * @type {Group}
+     */
+    this.sceneObject = new Group();
+    this.scene.add(this.sceneObject);
   }
 
   /**
@@ -34,8 +42,8 @@ export default class Entity {
 
   /**
    * Finds and returns the first component of a given class type.
-   * @template {import('../components/BaseComponent.js').default}
-   * @param {new(...args: any[]) => T} ComponentClass - The class of the component to find (e.g., RenderComponent).
+   * @template {import('../components/BaseComponent.js').default} T
+   * @param {{new(...args: any[]): T}} ComponentClass - The class of the component to find (e.g., RenderComponent).
    * @returns {T|null} The component instance, or null if not found.
    */
   getComponent(ComponentClass) {
@@ -54,15 +62,25 @@ export default class Entity {
   }
 
   /**
-   * Removes the entity and its visual representation from the scene.
+   * Removes the entity's scene object and all its children from the scene.
    */
   destroy() {
-    const renderComponent = this.getComponent(RenderComponent);
-    if (renderComponent && renderComponent.mesh) {
-      this.scene.remove(renderComponent.mesh);
-      // Also dispose of geometry and material to free GPU memory
-      renderComponent.mesh.geometry.dispose();
-      renderComponent.mesh.material.dispose();
-    }
+    // Recursively dispose of geometries and materials
+    this.sceneObject.traverse(object => {
+      if (object.isMesh) {
+        object.geometry.dispose();
+        if (object.material.isMaterial) {
+          // Clean up textures
+          for (const key of Object.keys(object.material)) {
+            const value = object.material[key];
+            if (value && typeof value === 'object' && 'dispose' in value) {
+              value.dispose();
+            }
+          }
+          object.material.dispose();
+        }
+      }
+    });
+    this.scene.remove(this.sceneObject);
   }
 }
