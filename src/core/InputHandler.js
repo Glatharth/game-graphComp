@@ -13,6 +13,7 @@ class InputHandler {
       return InputHandler.instance;
     }
     this.keys = {};
+    this.previousKeys = {};
 
     window.addEventListener('keydown', (e) => this.keys[e.key.toLowerCase()] = true);
     window.addEventListener('keyup', (e) => this.keys[e.key.toLowerCase()] = false);
@@ -27,6 +28,16 @@ class InputHandler {
    */
   isKeyDown(key) {
     return this.keys[key.toLowerCase()] || false;
+  }
+
+  /**
+   * Checks if a specific key was just pressed in the current frame.
+   * @param {string} key - The key to check.
+   * @returns {boolean} True if the key was just pressed, false otherwise.
+   */
+  wasKeyJustPressed(key) {
+    const lowerKey = key.toLowerCase();
+    return this.isKeyDown(lowerKey) && !this.previousKeys[lowerKey];
   }
 }
 

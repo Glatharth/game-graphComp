@@ -3,7 +3,7 @@
  * @module components/PhysicsComponent
  */
 
-import * as THREE from 'three';
+import { Vector3 } from 'three';
 import BaseComponent from './BaseComponent.js';
 
 /**
@@ -24,14 +24,14 @@ export default class PhysicsComponent extends BaseComponent {
     this.speed = speed;
     /**
      * The current velocity of the entity.
-     * @type {THREE.Vector3}
+     * @type {Vector3}
      */
-    this.velocity = new THREE.Vector3(0, 0, 0);
+    this.velocity = new Vector3(0, 0, 0);
     /**
      * The intended direction of movement.
-     * @type {THREE.Vector3}
+     * @type {Vector3}
      */
-    this.movementDirection = new THREE.Vector3(0, 0, 0);
+    this.movementDirection = new Vector3(0, 0, 0);
     /**
      * The current rotation of the entity in degrees.
      * @type {number}

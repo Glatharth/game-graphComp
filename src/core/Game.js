@@ -3,7 +3,7 @@
  * @module core/Game
  */
 
-import * as THREE from 'three';
+import { WebGLRenderer, Clock } from 'three'
 import StateManager from './StateManager.js';
 
 /**
@@ -15,10 +15,10 @@ import StateManager from './StateManager.js';
  */
 export default class Game {
   constructor() {
-    /** @type {THREE.WebGLRenderer} */
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    /** @type {THREE.Clock} */
-    this.clock = new THREE.Clock();
+    /** @type {WebGLRenderer} */
+    this.renderer = new WebGLRenderer({ antialias: true });
+    /** @type {Clock} */
+    this.clock = new Clock();
     /** @type {StateManager} */
     this.stateManager = new StateManager(this);
 
@@ -68,7 +68,7 @@ export default class Game {
             activeState.camera.aspect = window.innerWidth / window.innerHeight;
         } else if (activeState.camera.isOrthographicCamera) {
             const aspect = window.innerWidth / window.innerHeight;
-            const d = 20; // Match the value in HubWorldState
+            const d = 7; // Match the value in HubWorldState
             activeState.camera.left = -d * aspect;
             activeState.camera.right = d * aspect;
             activeState.camera.top = d;

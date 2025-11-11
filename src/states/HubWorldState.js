@@ -18,6 +18,11 @@ export default class HubWorldState extends BaseState {
      * @type {import('../entities/Entity.js').default[]} 
      */
     this.entities = [];
+    /**
+     * The player entity.
+     * @type {import('../entities/Entity.js').default | null}
+     */
+    this.player = null;
   }
 
   enter() {
@@ -26,9 +31,9 @@ export default class HubWorldState extends BaseState {
 
     // --- Isometric Camera ---
     const aspect = window.innerWidth / window.innerHeight;
-    const d = 20; // Camera distance
+    const d = 3; // Camera distance || also change in core/Game.js
     this.camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 1, 1000);
-    this.camera.position.set(20, 20, 20); // Diagonal position
+    this.camera.position.set(20, 20, 20); // Initial position
     this.camera.lookAt(this.scene.position); // Look at the origin
 
     // --- Lighting ---
@@ -48,6 +53,7 @@ export default class HubWorldState extends BaseState {
 
     // --- Entities ---
     const player = createPlayer(this.scene, new THREE.Vector3(0, 1, 0));
+    this.player = player;
     const portalToGame1 = createPortal(this.scene, new THREE.Vector3(10, 0.1, -5), 'MiniGame1', player);
 
     this.entities.push(player);
@@ -58,12 +64,21 @@ export default class HubWorldState extends BaseState {
     for (const entity of this.entities) {
       entity.update(deltaTime);
     }
+
+    if (this.player && this.camera) {
+      const playerPosition = this.player.sceneObject.position;
+      this.camera.position.x = playerPosition.x + 10;
+      this.camera.position.y = playerPosition.y + 10;
+      this.camera.position.z = playerPosition.z + 10;
+      this.camera.lookAt(playerPosition);
+    }
   }
 
   exit() {
     // Clean up scene and entities to free memory
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
+    this.player = null;
     this.scene = null;
     this.camera = null;
   }
