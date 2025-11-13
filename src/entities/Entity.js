@@ -76,7 +76,7 @@ export default class Entity {
                         if (
                             value &&
                             typeof value === 'object' &&
-                            'dispose' in value
+                            typeof value.dispose === 'function'
                         ) {
                             value.dispose();
                         }
