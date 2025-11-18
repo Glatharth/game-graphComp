@@ -1,0 +1,36 @@
+{
+    "objects": [
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": { "x": 0, "y": 0, "z": 0 },
+            "rotation": { "x": 0, "y": 0, "z": 0 },
+            "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": { "x": -5, "y": 0, "z": 0 },
+            "rotation": { "x": 0, "y": 1.5707963267948966, "z": 0 },
+            "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": { "x": 5, "y": 0, "z": 0 },
+            "rotation": { "x": 0, "y": -1.5707963267948966, "z": 0 },
+            "scale": { "x": 1, "y": 1, "z": 1 }
+        },
+        {
+            "type": "staticObject",
+            "model": "pinball",
+            "path": "assets/arcade/pinball.glb",
+            "position": { "x": -3, "y": 0, "z": -2 },
+            "rotation": { "x": 0, "y": 0, "z": 0 },
+            "scale": { "x": 1, "y": 1, "z": 1 }
+        }
+    ]
+}
