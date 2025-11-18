@@ -3,6 +3,8 @@
  * @module core/InteractionManager
  */
 
+import AnimationComponent from '../components/AnimationComponent.js'; // Import AnimationComponent
+
 /**
  * A centralized system for registering and executing game interactions.
  * This allows decoupling the interaction logic from the objects themselves.
@@ -18,6 +20,12 @@ export default class InteractionManager {
          * @type {Map<string, Function>}
          */
         this.interactions = new Map();
+
+        this.animationSelectionUI = null;
+        this.currentAnimationTarget = null; // Stores the entity whose animations are being selected
+
+        // Bind methods
+        this.hideAnimationSelectionUI = this.hideAnimationSelectionUI.bind(this);
 
         // Register default interactions
         this.registerDefaults();
@@ -72,10 +80,137 @@ export default class InteractionManager {
                 // We also check for y, but default to player's current y if not provided.
                 const y = typeof data.y === 'number' ? data.y : player.sceneObject.position.y;
                 player.sceneObject.position.set(data.x, y, data.z);
-                console.log(`Player teleported to ${data.x}, ${y}, ${data.z}`);
             } else {
                 console.warn("teleportPlayer interaction called without valid x and z coordinates.");
             }
         });
+
+        this.register('toggleAnimation', (data) => {
+            if (!data.target) {
+                console.error('toggleAnimation interaction called without a target.');
+                return;
+            }
+            
+            // Correctly retrieve the entity from the target's userData
+            const entity = data.target.userData.entity;
+            const animComponent = entity ? entity.getComponent(AnimationComponent) : null;
+
+
+            if (entity && animComponent) {
+                animComponent.toggleAnimation(data.animationName);
+            } else {
+                console.warn(`toggleAnimation: Target entity or AnimationComponent not found for model "${data.target.userData.model}".`);
+            }
+        });
+
+        this.register('showAnimationSelection', (data) => {
+            if (!data.target) {
+                console.error('showAnimationSelection interaction called without a target.');
+                return;
+            }
+
+            // Correctly retrieve the entity from the target's userData
+            const entity = data.target.userData.entity;
+            const animComponent = entity ? entity.getComponent(AnimationComponent) : null;
+
+            if (entity && animComponent) {
+                this.currentAnimationTarget = entity;
+                const animationNames = animComponent.getAnimationNames();
+                this.displayAnimationSelectionUI(animationNames);
+            } else {
+                console.warn(`showAnimationSelection: Target entity or AnimationComponent not found for model "${data.target.userData.model}".`);
+            }
+        });
+    }
+
+    /**
+     * Displays a UI overlay with a list of animations to choose from.
+     * @param {string[]} animationNames - An array of animation names.
+     */
+    displayAnimationSelectionUI(animationNames) {
+        if (this.animationSelectionUI) {
+            this.hideAnimationSelectionUI(); // Hide any existing UI
+        }
+
+        this.animationSelectionUI = document.createElement('div');
+        this.animationSelectionUI.id = 'animation-selection-ui';
+        this.animationSelectionUI.style.position = 'absolute';
+        this.animationSelectionUI.style.top = '50%';
+        this.animationSelectionUI.style.left = '50%';
+        this.animationSelectionUI.style.transform = 'translate(-50%, -50%)';
+        this.animationSelectionUI.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        this.animationSelectionUI.style.padding = '20px';
+        this.animationSelectionUI.style.borderRadius = '10px';
+        this.animationSelectionUI.style.color = 'white';
+        this.animationSelectionUI.style.zIndex = '1000';
+        this.animationSelectionUI.style.display = 'flex';
+        this.animationSelectionUI.style.flexDirection = 'column';
+        this.animationSelectionUI.style.gap = '10px';
+        this.animationSelectionUI.style.maxHeight = '80%';
+        this.animationSelectionUI.style.overflowY = 'auto';
+
+        const title = document.createElement('h3');
+        title.textContent = 'Select Animation:';
+        this.animationSelectionUI.appendChild(title);
+
+        if (animationNames.length === 0) {
+            const noAnimText = document.createElement('p');
+            noAnimText.textContent = 'No animations found for this object.';
+            this.animationSelectionUI.appendChild(noAnimText);
+        } else {
+            animationNames.forEach(name => {
+                const button = document.createElement('button');
+                button.textContent = name;
+                button.style.padding = '10px 15px';
+                button.style.backgroundColor = '#61dafb';
+                button.style.color = '#282c34';
+                button.style.border = 'none';
+                button.style.borderRadius = '5px';
+                button.style.cursor = 'pointer';
+                button.style.fontSize = '1em';
+                button.style.transition = 'background-color 0.2s';
+                button.onmouseover = () => button.style.backgroundColor = '#21a1f1';
+                button.onmouseout = () => button.style.backgroundColor = '#61dafb';
+                button.onclick = () => {
+                    if (this.currentAnimationTarget) {
+                        const targetAnimComponent = this.currentAnimationTarget.getComponent(AnimationComponent);
+                        if (targetAnimComponent) {
+                            targetAnimComponent.playAnimation(name, true); // Force play selected animation
+                        }
+                    }
+                    this.hideAnimationSelectionUI();
+                };
+                this.animationSelectionUI.appendChild(button);
+            });
+        }
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.style.marginTop = '10px';
+        closeButton.style.padding = '10px 15px';
+        closeButton.style.backgroundColor = '#f44336';
+        closeButton.style.color = 'white';
+        closeButton.style.border = 'none';
+        closeButton.style.borderRadius = '5px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.style.fontSize = '1em';
+        closeButton.onmouseover = () => closeButton.style.backgroundColor = '#d32f2f';
+        closeButton.onmouseout = () => closeButton.style.backgroundColor = '#f44336';
+        closeButton.onclick = this.hideAnimationSelectionUI;
+        this.animationSelectionUI.appendChild(closeButton);
+
+
+        document.body.appendChild(this.animationSelectionUI);
+    }
+
+    /**
+     * Hides the animation selection UI.
+     */
+    hideAnimationSelectionUI() {
+        if (this.animationSelectionUI && this.animationSelectionUI.parentNode) {
+            this.animationSelectionUI.parentNode.removeChild(this.animationSelectionUI);
+            this.animationSelectionUI = null;
+            this.currentAnimationTarget = null;
+        }
     }
 }

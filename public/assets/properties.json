@@ -1,0 +1,83 @@
+{
+    "arcade": {
+        "pinball": {
+            "path": "assets/arcade/pinball.glb",
+            "light": {
+                "type": "point",
+                "color": "#ffff00",
+                "intensity": 0.5,
+                "distance": 3,
+                "decay": 2,
+                "castShadow": true
+            }
+        },
+        "air-hockey": {
+            "path": "assets/arcade/air-hockey.glb",
+            "light": {
+                "type": "rectArea",
+                "color": "#00ffff",
+                "intensity": 1,
+                "width": 2,
+                "height": 1,
+                "castShadow": false
+            }
+        },
+        "claw-machine": {
+            "path": "assets/arcade/claw-machine.glb",
+            "light": {
+                "type": "spot",
+                "color": "#ffffff",
+                "intensity": 1,
+                "distance": 4,
+                "angle": 0.8,
+                "penumbra": 0.7,
+                "decay": 2,
+                "castShadow": true
+            }
+        },
+        "dance-machine": {
+            "path": "assets/arcade/dance-machine.glb",
+            "light": {
+                "type": "point",
+                "color": "#ff00ff",
+                "intensity": 1,
+                "distance": 5,
+                "decay": 2,
+                "castShadow": true
+            }
+        },
+        "arcade-machine": {
+            "path": "assets/arcade/arcade-machine.glb",
+            "light": {
+                "type": "point",
+                "color": "#0000ff",
+                "intensity": 0.7,
+                "distance": 4,
+                "decay": 2,
+                "castShadow": true
+            }
+        },
+        "vending-machine": {
+            "path": "assets/arcade/vending-machine.glb",
+            "light": {
+                "type": "rectArea",
+                "color": "#ffffff",
+                "intensity": 1,
+                "width": 1,
+                "height": 2,
+                "castShadow": false
+            }
+        },
+        "gambling-machine": {
+            "path": "assets/arcade/gambling-machine.glb",
+            "light": {
+                "type": "point",
+                "color": "#ff0000",
+                "intensity": 0.8,
+                "distance": 4,
+                "decay": 2,
+                "castShadow": true
+            }
+        }
+    }
+}

@@ -22,8 +22,16 @@ export default class PlayerInteractionComponent extends BaseComponent {
         this.interactionRadius = 2; // How close the player needs to be to interact
         this.closestInteractable = null;
 
-        this.handleInteraction = this.handleInteraction.bind(this);
-        window.addEventListener('keydown', this.handleInteraction);
+        // Properties for 'F' key hold detection
+        this.isFKeyPressed = false;
+        this.fKeyPressStartTime = 0;
+        this.fKeyHoldThreshold = 500; // milliseconds to consider a 'hold'
+
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
+
+        window.addEventListener('keydown', this.onKeyDown);
+        window.addEventListener('keyup', this.onKeyUp);
     }
 
     /**
@@ -36,7 +44,8 @@ export default class PlayerInteractionComponent extends BaseComponent {
         let minDistance = this.interactionRadius;
 
         for (const object of this.interactableObjects) {
-            if (object.userData.interactionId) {
+            // Ensure the object has an interactionId and is not the player itself
+            if (object.userData.interactionId && object !== this.owner.sceneObject) {
                 const distance = playerPosition.distanceTo(object.position);
                 if (distance < minDistance) {
                     minDistance = distance;
@@ -47,24 +56,57 @@ export default class PlayerInteractionComponent extends BaseComponent {
     }
 
     /**
-     * Handles the key press for interaction.
+     * Handles the keydown event for interaction.
      * @param {KeyboardEvent} event
      */
-    handleInteraction(event) {
-        if (event.key.toLowerCase() === 'f' && this.closestInteractable) {
-            if (!this.interactionManager) {
-                console.error("InteractionManager not provided to PlayerInteractionComponent.");
-                return;
-            }
-            const { interactionId, interactionData } = this.closestInteractable.userData;
-            this.interactionManager.execute(interactionId, interactionData);
+    onKeyDown(event) {
+        if (event.key.toLowerCase() === 'f' && !this.isFKeyPressed) {
+            this.isFKeyPressed = true;
+            this.fKeyPressStartTime = performance.now();
         }
     }
 
     /**
-     * Cleans up the event listener when the component is destroyed.
+     * Handles the keyup event for interaction, triggering different actions based on hold duration.
+     * @param {KeyboardEvent} event
+     */
+    onKeyUp(event) {
+        if (event.key.toLowerCase() === 'f') {
+            this.isFKeyPressed = false;
+
+            if (!this.closestInteractable) {
+                return; // No interactable object nearby
+            }
+
+            if (!this.interactionManager) {
+                console.error("InteractionManager not provided to PlayerInteractionComponent.");
+                return;
+            }
+
+            const holdDuration = performance.now() - this.fKeyPressStartTime;
+            const { interactionId, interactionData } = this.closestInteractable.userData;
+
+            if (holdDuration >= this.fKeyHoldThreshold) {
+                // 'F' was held, trigger animation selection
+                this.interactionManager.execute('showAnimationSelection', {
+                    target: this.closestInteractable,
+                    allAnimationData: this.owner.game.loader.getAnimationData(this.closestInteractable.userData.model) // Pass all animation data for the model
+                });
+            } else {
+                // 'F' was tapped, trigger default interaction (e.g., toggleAnimation)
+                this.interactionManager.execute(interactionId, {
+                    ...interactionData,
+                    target: this.closestInteractable,
+                });
+            }
+        }
+    }
+
+    /**
+     * Cleans up the event listeners when the component is destroyed.
      */
     destroy() {
-        window.removeEventListener('keydown', this.handleInteraction);
+        window.removeEventListener('keydown', this.onKeyDown);
+        window.removeEventListener('keyup', this.onKeyUp);
     }
 }

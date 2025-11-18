@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation Debugger</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; background-color: #282c34; color: #fff; }
+        #drop-zone { border: 2px dashed #61dafb; border-radius: 10px; padding: 50px; margin: 20px auto; max-width: 500px; cursor: pointer; }
+        #output { margin-top: 20px; text-align: left; background-color: #20232a; padding: 15px; border-radius: 5px; white-space: pre-wrap; min-height: 50px; }
+    </style>
+</head>
+<body>
+    <h1>GLB Animation Debugger</h1>
+    <div id="drop-zone">Drop .glb files here</div>
+    <div id="output">Animation names will appear here...</div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        const dropZone = document.getElementById('drop-zone');
+        const output = document.getElementById('output');
+
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.style.backgroundColor = '#3a3a40';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = 'transparent';
+        });
+
+        dropZone.addEventListener('drop', async (event) => {
+            event.preventDefault();
+            dropZone.style.backgroundColor = 'transparent';
+            output.textContent = ''; // Clear previous output
+
+            const files = event.dataTransfer.files;
+            if (files.length === 0) {
+                output.textContent = 'No files dropped.';
+                return;
+            }
+
+            for (const file of files) {
+                if (file.name.endsWith('.glb')) {
+                    await processGlbFile(file);
+                } else {
+                    output.textContent += `\nSkipping non-.glb file: ${file.name}`;
+                }
+            }
+        });
+
+        async function processGlbFile(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const loader = new GLTFLoader();
+                    try {
+                        loader.parse(e.target.result, '', (gltf) => {
+                            const animations = gltf.animations;
+                            if (animations && animations.length > 0) {
+                                const animationNames = animations.map(clip => clip.name);
+                                output.textContent += `\n--- File: ${file.name} ---\nAnimations Found:\n- ${animationNames.join('\n- ')}\n`;
+                            } else {
+                                output.textContent += `\n--- File: ${file.name} ---\nNo animations found in this model.\n`;
+                            }
+                            resolve();
+                        }, (error) => {
+                            console.error(`Error parsing GLB file ${file.name}:`, error);
+                            output.textContent += `\n--- File: ${file.name} ---\nError parsing. See console for details.\n`;
+                            resolve();
+                        });
+                    } catch (parseError) {
+                        console.error(`An exception occurred during parsing ${file.name}:`, parseError);
+                        output.textContent += `\n--- File: ${file.name} ---\nAn error occurred while parsing. Check the console.\n`;
+                        resolve();
+                    }
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+    </script>
+</body>
+</html>

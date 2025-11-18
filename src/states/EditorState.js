@@ -79,11 +79,6 @@ export default class EditorState extends BaseState {
         this.camera.position.set(25, 25, 25);
         this.camera.lookAt(this.scene.position);
 
-        this.scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(10, 15, 5);
-        this.scene.add(directionalLight);
-
         this.editorFloor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshBasicMaterial({ visible: false }));
         this.editorFloor.rotation.x = -Math.PI / 2;
         this.editorFloor.name = 'editorFloor';
@@ -415,10 +410,6 @@ export default class EditorState extends BaseState {
         }
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-        scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(directionalLight);
         try {
             const model = await this.assetManager.getAsset(modelPath);
             scene.add(model);

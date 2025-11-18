@@ -8,6 +8,7 @@ export default class ObjectLoader {
     constructor() {
         this.objectTemplates = new Map();
         this.animationData = new Map();
+        this.propertiesData = new Map();
     }
 
     /**
@@ -46,6 +47,24 @@ export default class ObjectLoader {
     }
 
     /**
+     * Loads the properties data from the given path.
+     * @param {string} path - The path to the properties.json file.
+     */
+    async loadPropertiesData(path) {
+        try {
+            const response = await fetch(`${path}?v=${Date.now()}`, { cache: 'no-store' });
+            const propertiesFile = await response.json();
+            for (const category in propertiesFile) {
+                for (const key in propertiesFile[category]) {
+                    this.propertiesData.set(key, propertiesFile[category][key]);
+                }
+            }
+        } catch (error) {
+            console.error('Error loading properties data:', error);
+        }
+    }
+
+    /**
      * Retrieves a pre-loaded object template.
      * @param {string} type - The type of the object (e.g., "player").
      * @returns {object | undefined} The object template.
@@ -61,6 +80,15 @@ export default class ObjectLoader {
      */
     getAnimationData(name) {
         return this.animationData.get(name);
+    }
+
+    /**
+     * Retrieves the properties data for a specific model.
+     * @param {string} name - The name of the model (e.g., "pinball").
+     * @returns {object | undefined} The properties data for the model.
+     */
+    getPropertiesData(name) {
+        return this.propertiesData.get(name);
     }
 
     /**

@@ -11,6 +11,8 @@ import {
     createStaticObject,
 } from '../entities/factories.js';
 import ObjectLoader from '../loaders/ObjectLoader.js';
+import PlayerInteractionComponent from '../components/PlayerInteractionComponent.js';
+import InteractionManager from '../core/InteractionManager.js';
 
 /**
  * The main hub world of the game, featuring an isometric camera view.
@@ -28,6 +30,11 @@ export default class HubWorldState extends BaseState {
          * @type {import('../entities/Entity.js').default | null}
          */
         this.player = null;
+        /**
+         * The interaction manager for handling player interactions.
+         * @type {InteractionManager}
+         */
+        this.interactionManager = new InteractionManager(game);
 
         // Initialize the loader if it doesn't exist on the game object
         if (!this.game.loader) {
@@ -53,14 +60,6 @@ export default class HubWorldState extends BaseState {
         this.camera.position.set(20, 20, 20); // Initial position
         this.camera.lookAt(this.scene.position); // Look at the origin
 
-        // --- Lighting ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        this.scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(10, 15, 5);
-        this.scene.add(directionalLight);
-
         // --- Floor ---
         const floorGeometry = new THREE.PlaneGeometry(50, 50);
         const floorMaterial = new THREE.MeshStandardMaterial({
@@ -72,14 +71,23 @@ export default class HubWorldState extends BaseState {
 
         // --- Load Assets ---
         await this.game.loader.loadAnimationData('assets/animations.json');
+        await this.game.loader.loadPropertiesData('assets/properties.json');
         const worldData = await this.game.loader.loadWorldData('hub');
+
+        const interactableObjects = []; // Array to hold sceneObjects that are interactable
 
         // --- World Scenery ---
         if (worldData && worldData.objects) {
             for (const objectData of worldData.objects) {
                 if (objectData.type === 'staticObject') {
-                    const entity = createStaticObject(this.scene, objectData);
+                    const entity = await createStaticObject(this.game, this.scene, objectData, this.game.loader);
                     this.entities.push(entity);
+                    // Collect interactable objects
+                    if (objectData.interactionId) {
+                        entity.sceneObject.userData.interactionId = objectData.interactionId;
+                        entity.sceneObject.userData.interactionData = objectData.interactionData || {};
+                        interactableObjects.push(entity.sceneObject);
+                    }
                 }
             }
         }
@@ -88,12 +96,19 @@ export default class HubWorldState extends BaseState {
         const animationData =
             this.game.loader.getAnimationData('character-female-a');
         const player = createPlayer(
+            this.game,
             this.scene,
             new THREE.Vector3(0, 1, 0),
             animationData,
         );
         this.player = player;
+
+        // Add PlayerInteractionComponent to the player
+        player.addComponent(new PlayerInteractionComponent(player, interactableObjects, this.interactionManager));
+
+
         const portalToGame1 = createPortal(
+            this.game,
             this.scene,
             new THREE.Vector3(10, 0.1, -5),
             'MiniGame1',
@@ -125,5 +140,6 @@ export default class HubWorldState extends BaseState {
         this.player = null;
         this.scene = null;
         this.camera = null;
+        this.interactionManager = null; // Clean up interaction manager
     }
 }

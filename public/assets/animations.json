@@ -95,6 +95,80 @@
                 { "name": "walk", "index": 2, "duration": 0.5, "enabled": false },
                 { "name": "interact", "index": 24, "loop": "once", "enabled": false }
             ]
+        },
+        "character-employee": {
+            "path": "assets/characters/character-employee.glb",
+            "animations": [
+                { "name": "static", "loop": "repeat", "enabled": false },
+                { "name": "idle", "loop": "repeat", "enabled": true },
+                { "name": "walk", "loop": "repeat", "enabled": false },
+                { "name": "sprint", "loop": "repeat", "enabled": false },
+                { "name": "jump", "loop": "once", "enabled": false },
+                { "name": "fall", "loop": "repeat", "enabled": false },
+                { "name": "crouch", "loop": "repeat", "enabled": false },
+                { "name": "sit", "loop": "repeat", "enabled": false },
+                { "name": "drive", "loop": "repeat", "enabled": false },
+                { "name": "die", "loop": "once", "enabled": false },
+                { "name": "pick-up", "loop": "once", "enabled": false },
+                { "name": "emote-yes", "loop": "once", "enabled": false },
+                { "name": "emote-no", "loop": "once", "enabled": false },
+                { "name": "holding-right", "loop": "repeat", "enabled": false },
+                { "name": "holding-left", "loop": "repeat", "enabled": false },
+                { "name": "holding-both", "loop": "repeat", "enabled": false },
+                { "name": "holding-right-shoot", "loop": "repeat", "enabled": false },
+                { "name": "holding-left-shoot", "loop": "repeat", "enabled": false },
+                { "name": "holding-both-shoot", "loop": "repeat", "enabled": false },
+                { "name": "attack-melee-right", "loop": "once", "enabled": false },
+                { "name": "attack-melee-left", "loop": "once", "enabled": false },
+                { "name": "attack-kick-right", "loop": "once", "enabled": false },
+                { "name": "attack-kick-left", "loop": "once", "enabled": false },
+                { "name": "interact-right", "loop": "once", "enabled": false },
+                { "name": "interact-left", "loop": "once", "enabled": false },
+                { "name": "wheelchair-sit", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-look-left", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-look-right", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-forward", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-back", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-left", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-right", "loop": "repeat", "enabled": false }
+            ]
+        },
+        "character-gamer": {
+            "path": "assets/characters/character-gamer.glb",
+            "animations": [
+                { "name": "static", "loop": "repeat", "enabled": false },
+                { "name": "idle", "loop": "repeat", "enabled": true },
+                { "name": "walk", "loop": "repeat", "enabled": false },
+                { "name": "sprint", "loop": "repeat", "enabled": false },
+                { "name": "jump", "loop": "once", "enabled": false },
+                { "name": "fall", "loop": "repeat", "enabled": false },
+                { "name": "crouch", "loop": "repeat", "enabled": false },
+                { "name": "sit", "loop": "repeat", "enabled": false },
+                { "name": "drive", "loop": "repeat", "enabled": false },
+                { "name": "die", "loop": "once", "enabled": false },
+                { "name": "pick-up", "loop": "once", "enabled": false },
+                { "name": "emote-yes", "loop": "once", "enabled": false },
+                { "name": "emote-no", "loop": "once", "enabled": false },
+                { "name": "holding-right", "loop": "repeat", "enabled": false },
+                { "name": "holding-left", "loop": "repeat", "enabled": false },
+                { "name": "holding-both", "loop": "repeat", "enabled": false },
+                { "name": "holding-right-shoot", "loop": "repeat", "enabled": false },
+                { "name": "holding-left-shoot", "loop": "repeat", "enabled": false },
+                { "name": "holding-both-shoot", "loop": "repeat", "enabled": false },
+                { "name": "attack-melee-right", "loop": "once", "enabled": false },
+                { "name": "attack-melee-left", "loop": "once", "enabled": false },
+                { "name": "attack-kick-right", "loop": "once", "enabled": false },
+                { "name": "attack-kick-left", "loop": "once", "enabled": false },
+                { "name": "interact-right", "loop": "once", "enabled": false },
+                { "name": "interact-left", "loop": "once", "enabled": false },
+                { "name": "wheelchair-sit", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-look-left", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-look-right", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-forward", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-back", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-left", "loop": "repeat", "enabled": false },
+                { "name": "wheelchair-move-right", "loop": "repeat", "enabled": false }
+            ]
         }
     },
     "aids": {
@@ -114,5 +188,33 @@
         "wheelchair-power-deluxe": { "path": "assets/characters/wheelchair-power-deluxe.glb", "animations": [] },
         "wheelchair-power": { "path": "assets/characters/wheelchair-power.glb", "animations": [] },
         "wheelchair": { "path": "assets/characters/wheelchair.glb", "animations": [] }
+    },
+    "arcade": {
+        "claw-machine": {
+            "path": "assets/arcade/claw-machine.glb",
+            "animations": [
+                { "name": "animation", "loop": "repeat", "enabled": false }
+            ]
+        },
+        "prize-wheel": {
+            "path": "assets/arcade/prize-wheel.glb",
+            "animations": [
+                { "name": "animation", "loop": "repeat", "enabled": false }
+            ]
+        },
+        "ticket-machine": {
+            "path": "assets/arcade/ticket-machine.glb",
+            "animations": [
+                { "name": "animation", "loop": "repeat", "enabled": false }
+            ]
+        },
+        "wall-door-rotate": {
+            "path": "assets/arcade/wall-door-rotate.glb",
+            "animations": [
+                { "name": "open", "loop": "once", "enabled": false },
+                { "name": "close", "loop": "once", "enabled": false },
+                { "name": "open-and-close", "loop": "once", "enabled": false }
+            ]
+        }
     }
 }

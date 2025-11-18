@@ -59,11 +59,6 @@ export default class CustomWorldState extends BaseState {
         this.camera.position.set(10, 10, 10);
         this.camera.lookAt(this.scene.position);
 
-        this.scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
-        directionalLight.position.set(10, 15, 5);
-        this.scene.add(directionalLight);
-
         const floor = new THREE.Mesh(
             new THREE.PlaneGeometry(100, 100),
             new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.8 })
@@ -71,13 +66,14 @@ export default class CustomWorldState extends BaseState {
         floor.rotation.x = -Math.PI / 2;
         this.scene.add(floor);
 
-        // Use passed data if it exists (from editor), otherwise load from file.
+        // Load all necessary data
+        await this.game.loader.loadPropertiesData('assets/properties.json');
         const worldData = this.worldData || await this.loadWorldFromFile(this.worldName);
 
         const interactableObjects = [];
         if (worldData && worldData.objects) {
             for (const objectData of worldData.objects) {
-                const entity = createStaticObject(this.scene, objectData);
+                const entity = await createStaticObject(this.scene, objectData, this.game.loader);
                 this.entities.push(entity);
 
                 if (objectData.interactionId) {
@@ -147,7 +143,7 @@ export default class CustomWorldState extends BaseState {
     }
 
     exit() {
-        const testUI = document.createElement('div');
+        const testUI = document.getElementById('test-ui');
         if (testUI) {
             testUI.remove();
         }

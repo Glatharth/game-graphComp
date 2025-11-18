@@ -12,15 +12,18 @@ import { Group, Scene } from 'three';
  */
 export default class Entity {
     /**
+     * @param {import('../core/Game.js').default} game - The main game instance.
      * @param {Scene} scene - The Three.js scene where the entity (or its representation) exists.
      */
-    constructor(scene) {
+    constructor(game, scene) {
+        /** @type {import('../core/Game.js').default} */
+        this.game = game; // Store the game instance
         /** @type {Scene} */
         this.scene = scene;
         /** @type {import('../components/BaseComponent.js').default[]} */
         this.components = [];
         /** @type {string} */
-        // this.id = Math.random().toString(36).substring(2, 9); // Unique ID for debugging
+        this.id = Math.random().toString(36).substring(2, 9); // Unique ID for debugging
 
         /**
          * The root 3D object for this entity in the scene.
@@ -28,6 +31,7 @@ export default class Entity {
          * @type {Group}
          */
         this.sceneObject = new Group();
+        this.sceneObject.userData.entity = this; // Store a reference to this Entity
         this.scene.add(this.sceneObject);
     }
 
