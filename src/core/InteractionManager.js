@@ -4,6 +4,7 @@
  */
 
 import AnimationComponent from '../components/AnimationComponent.js'; // Import AnimationComponent
+import { eventBus } from './EventBus.js'; // Ensure eventBus is imported
 
 /**
  * A centralized system for registering and executing game interactions.
@@ -119,6 +120,16 @@ export default class InteractionManager {
                 this.displayAnimationSelectionUI(animationNames);
             } else {
                 console.warn(`showAnimationSelection: Target entity or AnimationComponent not found for model "${data.target.userData.model}".`);
+            }
+        });
+
+        // New interaction to change the game state (world)
+        this.register('changeWorld', (data) => {
+            if (data && data.targetState) {
+                console.log(`InteractionManager: Attempting to change state to: ${data.targetState}`);
+                eventBus.emit('change-state', data.targetState);
+            } else {
+                console.warn("changeWorld interaction called without a targetState.");
             }
         });
     }

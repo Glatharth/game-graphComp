@@ -2,19 +2,4883 @@
     "objects": [
         {
             "type": "staticObject",
-            "model": "rock",
-            "path": "public/worlds/rock.glb",
-            "position": { "x": 5, "y": 0, "z": -10 },
-            "rotation": { "x": 0, "y": 0.5, "z": 0 },
-            "scale": { "x": 1, "y": 1, "z": 1 }
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         },
         {
             "type": "staticObject",
-            "model": "tree",
-            "path": "public/worlds/tree.glb",
-            "position": { "x": -8, "y": 0, "z": 4 },
-            "rotation": { "x": 0, "y": 0, "z": 0 },
-            "scale": { "x": 1.2, "y": 1.2, "z": 1.2 }
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "floor",
+            "path": "assets/arcade/floor.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall",
+            "path": "assets/arcade/wall.glb",
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 3.141592653589793,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall-corner",
+            "path": "assets/arcade/wall-corner.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 7.853981633974483,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall-corner",
+            "path": "assets/arcade/wall-corner.glb",
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 15.707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall-corner",
+            "path": "assets/arcade/wall-corner.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": -6
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "wall-corner",
+            "path": "assets/arcade/wall-corner.glb",
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 7
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "prize-wheel",
+            "path": "assets/arcade/prize-wheel.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "gambling-machine",
+            "path": "assets/arcade/gambling-machine.glb",
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "basketball-game",
+            "path": "assets/arcade/basketball-game.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "pinball",
+            "path": "assets/arcade/pinball.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "dynamicObject",
+            "model": "character-employee",
+            "path": "assets/arcade/character-employee.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "pinball",
+            "path": "assets/arcade/pinball.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "gambling-machine",
+            "path": "assets/arcade/gambling-machine.glb",
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "prizes",
+            "path": "assets/arcade/prizes.glb",
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "pinball",
+            "path": "assets/arcade/pinball.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 4.71238898038469,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "dance-machine",
+            "path": "assets/arcade/dance-machine.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "dance-machine",
+            "path": "assets/arcade/dance-machine.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "air-hockey",
+            "path": "assets/arcade/air-hockey.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "claw-machine",
+            "path": "assets/arcade/claw-machine.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "claw-machine",
+            "path": "assets/arcade/claw-machine.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "pinball",
+            "path": "assets/arcade/pinball.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "cash-register",
+            "path": "assets/arcade/cash-register.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": -4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "air-hockey",
+            "path": "assets/arcade/air-hockey.glb",
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "pinball",
+            "path": "assets/arcade/pinball.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 4
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "claw-machine",
+            "path": "assets/arcade/claw-machine.glb",
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": -1
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "ticket-machine",
+            "path": "assets/arcade/ticket-machine.glb",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 6.283185307179586,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "arcade-machine",
+            "path": "assets/arcade/arcade-machine.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -3
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "arcade-machine",
+            "path": "assets/arcade/arcade-machine.glb",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -2
+            },
+            "rotation": {
+                "x": 0,
+                "y": 1.5707963267948966,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        {
+            "type": "staticObject",
+            "model": "vending-machine",
+            "path": "assets/arcade/vending-machine.glb",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -5
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
         }
     ]
 }

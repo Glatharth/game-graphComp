@@ -205,7 +205,7 @@
         "ticket-machine": {
             "path": "assets/arcade/ticket-machine.glb",
             "animations": [
-                { "name": "animation", "loop": "repeat", "enabled": false }
+                { "name": "animation", "loop": "repeat", "enabled": true }
             ]
         },
         "wall-door-rotate": {

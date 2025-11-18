@@ -84,9 +84,7 @@ export default class HubWorldState extends BaseState {
                     const entity = await createStaticObject(this.game, this.scene, objectData, this.game.loader);
                     this.entities.push(entity);
                     // Collect interactable objects
-                    if (objectData.interactionId) {
-                        entity.sceneObject.userData.interactionId = objectData.interactionId;
-                        entity.sceneObject.userData.interactionData = objectData.interactionData || {};
+                    if (entity.sceneObject.userData.interactionId) { // Check entity.sceneObject.userData.interactionId which is set by factories.js
                         interactableObjects.push(entity.sceneObject);
                     }
                 }
@@ -105,6 +103,7 @@ export default class HubWorldState extends BaseState {
         this.player = player;
 
         // Add PlayerInteractionComponent to the player
+        console.log("HubWorldState: Interactable objects being passed to PlayerInteractionComponent:", interactableObjects); // Added log
         player.addComponent(new PlayerInteractionComponent(player, interactableObjects, this.interactionManager));
 
 

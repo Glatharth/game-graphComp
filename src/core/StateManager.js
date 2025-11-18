@@ -4,6 +4,8 @@
  */
 
 import { eventBus } from './EventBus.js';
+import HubWorldState from '../states/HubWorldState.js'; // Assuming HubWorldState is also managed here
+import SolarSystemState from '../states/SolarSystemState.js'; // Import SolarSystemState
 
 /**
  * Manages the game's finite state machine. Each state represents a "world" or "scene"
@@ -19,6 +21,11 @@ export default class StateManager {
         this.states = {};
         this.currentState = null;
 
+        // Register states
+        this.addState('HubWorld', new HubWorldState(game));
+        this.addState('SolarSystem', new SolarSystemState(game));
+        console.log("StateManager: All states registered in constructor:", this.states); // Added log
+
         eventBus.on('change-state', this.setState.bind(this));
     }
 
@@ -28,7 +35,9 @@ export default class StateManager {
      * @param {import('../states/BaseState.js').default} state - The state class instance.
      */
     addState(name, state) {
+        console.log(`StateManager: Attempting to add state '${name}':`, state); // Added log
         this.states[name] = state;
+        console.log(`StateManager: State '${name}' added. Current states map:`, this.states); // Added log
     }
 
     /**

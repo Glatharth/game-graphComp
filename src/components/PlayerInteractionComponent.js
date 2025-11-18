@@ -63,6 +63,7 @@ export default class PlayerInteractionComponent extends BaseComponent {
         if (event.key.toLowerCase() === 'f' && !this.isFKeyPressed) {
             this.isFKeyPressed = true;
             this.fKeyPressStartTime = performance.now();
+            console.log('PlayerInteractionComponent: F key pressed.');
         }
     }
 
@@ -73,9 +74,11 @@ export default class PlayerInteractionComponent extends BaseComponent {
     onKeyUp(event) {
         if (event.key.toLowerCase() === 'f') {
             this.isFKeyPressed = false;
+            console.log('PlayerInteractionComponent: F key released.');
 
             if (!this.closestInteractable) {
-                return; // No interactable object nearby
+                console.log('PlayerInteractionComponent: No interactable object nearby.');
+                return;
             }
 
             if (!this.interactionManager) {
@@ -86,13 +89,25 @@ export default class PlayerInteractionComponent extends BaseComponent {
             const holdDuration = performance.now() - this.fKeyPressStartTime;
             const { interactionId, interactionData } = this.closestInteractable.userData;
 
+            console.log(`PlayerInteractionComponent: Hold duration: ${holdDuration}ms.`);
+            console.log(`PlayerInteractionComponent: Closest interactable - ID: ${interactionId}, Data:`, interactionData);
+
+            // If the interaction is to change the world, always execute it regardless of tap/hold
+            if (interactionId === 'changeWorld' && interactionData && interactionData.targetState) {
+                console.log(`PlayerInteractionComponent: Arcade Machine interaction detected. Changing world to ${interactionData.targetState}.`);
+                this.interactionManager.execute(interactionId, interactionData);
+                return; // Exit after handling changeWorld
+            }
+
             if (holdDuration >= this.fKeyHoldThreshold) {
+                console.log('PlayerInteractionComponent: F key held. Triggering showAnimationSelection.');
                 // 'F' was held, trigger animation selection
                 this.interactionManager.execute('showAnimationSelection', {
                     target: this.closestInteractable,
-                    allAnimationData: this.owner.game.loader.getAnimationData(this.closestInteractable.userData.model) // Pass all animation data for the model
+                    allAnimationData: this.owner.game.loader.getAnimationData(this.closestInteractable.userData.model)
                 });
             } else {
+                console.log('PlayerInteractionComponent: F key tapped. Triggering default interaction.');
                 // 'F' was tapped, trigger default interaction (e.g., toggleAnimation)
                 this.interactionManager.execute(interactionId, {
                     ...interactionData,

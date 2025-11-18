@@ -152,18 +152,23 @@ export async function createStaticObject(game, scene, objectData, loader) {
                     lightData.distance,
                     lightData.decay,
                 );
-                light.position.set(0, 2, 0);
+                light.position.set(0, 2, 0); // Lift point light 2 units above object origin
                 break;
             case 'spot':
-                light = new THREE.SpotLight(
+                light = new THREE.SpotLight( // Corrected to SpotLight
                     lightData.color,
                     lightData.intensity,
                     lightData.distance,
-                    lightData.angle,
-                    lightData.penumbra,
+                    lightData.angle, // Added angle
+                    lightData.penumbra, // Added penumbra
                     lightData.decay,
                 );
-                light.position.set(0, 2, 0);
+                light.position.set(0, 2, 0); // Lift spot light 2 units above object origin
+                // Create a target for the spot light and position it below the light
+                const spotTarget = new THREE.Object3D();
+                spotTarget.position.set(0, -2, 0); // Target is 2 units below the light, effectively at object origin
+                light.add(spotTarget); // Add target as a child of the light
+                light.target = spotTarget; // Set the target
                 break;
             case 'rectArea':
                 light = new THREE.RectAreaLight(
@@ -178,6 +183,12 @@ export async function createStaticObject(game, scene, objectData, loader) {
             light.castShadow = lightData.castShadow;
             entity.sceneObject.add(light);
         }
+    }
+
+    // Add interaction data to sceneObject.userData if available in properties
+    if (properties && properties.interactionId) {
+        entity.sceneObject.userData.interactionId = properties.interactionId;
+        entity.sceneObject.userData.interactionData = properties.interactionData || {};
     }
 
     return entity;
