@@ -32,6 +32,8 @@ export default class CustomWorldState extends BaseState {
         this.worldData = null;
         this.worldName = 'custom';
         this.isTest = false;
+        this.floorGeometry = null; // Store floor geometry
+        this.floorMaterial = null; // Store floor material
 
         if (!this.game.loader) {
             this.game.loader = new ObjectLoader();
@@ -59,10 +61,9 @@ export default class CustomWorldState extends BaseState {
         this.camera.position.set(10, 10, 10);
         this.camera.lookAt(this.scene.position);
 
-        const floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(100, 100),
-            new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.8 })
-        );
+        this.floorGeometry = new THREE.PlaneGeometry(100, 100);
+        this.floorMaterial = new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.8 });
+        const floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
         floor.rotation.x = -Math.PI / 2;
         this.scene.add(floor);
 
@@ -73,7 +74,8 @@ export default class CustomWorldState extends BaseState {
         const interactableObjects = [];
         if (worldData && worldData.objects) {
             for (const objectData of worldData.objects) {
-                const entity = await createStaticObject(this.scene, objectData, this.game.loader);
+                console.log("CustomWorldState: Scene before creating entity:", this.scene); // Adicionar este log
+                const entity = await createStaticObject(this.game, this.scene, objectData, this.game.loader);
                 this.entities.push(entity);
 
                 if (objectData.interactionId) {
@@ -86,7 +88,7 @@ export default class CustomWorldState extends BaseState {
 
         await this.game.loader.loadAnimationData('assets/animations.json');
         const animationData = this.game.loader.getAnimationData('character-female-a');
-        const player = createPlayer(this.scene, new THREE.Vector3(0, 1, 0), animationData);
+        const player = createPlayer(this.game, this.scene, new THREE.Vector3(0, 1, 0), animationData);
         const interactionComponent = new PlayerInteractionComponent(player, interactableObjects, this.interactionManager);
         player.addComponent(interactionComponent);
         this.player = player;
@@ -142,29 +144,61 @@ export default class CustomWorldState extends BaseState {
         }
     }
 
+    dispose() {
+        this.exit();
+    }
+
     exit() {
         const testUI = document.getElementById('test-ui');
         if (testUI) {
             testUI.remove();
         }
 
-        this.entities.forEach((entity) => {
-            if (entity.components) {
-                entity.components.forEach(component => {
-                    if (typeof component.destroy === 'function') {
-                        component.destroy();
-                    }
-                });
-            }
-            if (typeof entity.destroy === 'function') {
-                entity.destroy();
-            }
-        });
-
+        // Clean up scene and entities to free memory
+        this.entities.forEach((entity) => entity.destroy());
         this.entities = [];
+
+        // Dispose of floor geometry and material
+        if (this.floorGeometry) {
+            this.floorGeometry.dispose();
+            this.floorGeometry = null;
+        }
+        if (this.floorMaterial) {
+            this.floorMaterial.dispose();
+            this.floorMaterial = null;
+        }
+
+        // Dispose of scene objects and render targets
+        if (this.scene) {
+            this.scene.traverse((object) => {
+                if (object.isMesh) {
+                    if (object.geometry) {
+                        object.geometry.dispose();
+                    }
+                    if (object.material) {
+                        // In case of an array of materials
+                        if (Array.isArray(object.material)) {
+                            object.material.forEach((material) =>
+                                material.dispose(),
+                            );
+                        } else {
+                            object.material.dispose();
+                        }
+                    }
+                }
+            });
+            // The scene itself should be nullified after traversing and disposing its contents
+            this.scene = null;
+        }
+
+        // Dispose of cached assets in the loader
+        if (this.game.loader) {
+            this.game.loader.dispose();
+        }
+
         this.player = null;
-        this.scene = null;
         this.camera = null;
         this.worldData = null;
+        this.interactionManager = null; // Clean up interaction manager
     }
 }

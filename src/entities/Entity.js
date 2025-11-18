@@ -3,7 +3,7 @@
  * @module entities/Entity
  */
 
-import { Group, Scene } from 'three';
+import { Group, Scene, Texture } from 'three';
 
 /**
  * Represents an object in the game (player, enemy, item, portal, etc.).
@@ -32,7 +32,13 @@ export default class Entity {
          */
         this.sceneObject = new Group();
         this.sceneObject.userData.entity = this; // Store a reference to this Entity
-        this.scene.add(this.sceneObject);
+        if (this.scene) {
+            this.scene.add(this.sceneObject);
+        } else {
+            console.error("Entity constructor: 'scene' is null. Cannot add sceneObject to scene.");
+            // Depending on desired behavior, you might throw an error here:
+            // throw new Error("Cannot create Entity: Scene is null.");
+        }
     }
 
     /**
@@ -67,28 +73,41 @@ export default class Entity {
 
     /**
      * Removes the entity's scene object and all its children from the scene.
+     * Disposes of geometries and materials that are not cached.
      */
     destroy() {
         // Recursively dispose of geometries and materials
         this.sceneObject.traverse((object) => {
             if (object.isMesh) {
-                object.geometry.dispose();
-                if (object.material.isMaterial) {
-                    // Clean up textures
-                    for (const key of Object.keys(object.material)) {
-                        const value = object.material[key];
-                        if (
-                            value &&
-                            typeof value === 'object' &&
-                            typeof value.dispose === 'function'
-                        ) {
-                            value.dispose();
+                if (object.geometry) {
+                    object.geometry.dispose();
+                }
+
+                const disposeMaterial = (material) => {
+                    if (material && material.isMaterial && !material.userData.isCachedMaterial) {
+                        // Dispose of textures associated with the material
+                        for (const key in material) {
+                            const value = material[key];
+                            if (value instanceof Texture) {
+                                value.dispose();
+                            }
                         }
+                        material.dispose();
                     }
-                    object.material.dispose();
+                };
+
+                if (object.material) {
+                    if (Array.isArray(object.material)) {
+                        object.material.forEach(disposeMaterial);
+                    } else {
+                        disposeMaterial(object.material);
+                    }
                 }
             }
         });
-        this.scene.remove(this.sceneObject);
+        // Ensure the scene exists before trying to remove from it
+        if (this.scene) {
+            this.scene.remove(this.sceneObject);
+        }
     }
 }

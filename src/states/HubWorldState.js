@@ -61,11 +61,11 @@ export default class HubWorldState extends BaseState {
         this.camera.lookAt(this.scene.position); // Look at the origin
 
         // --- Floor ---
-        const floorGeometry = new THREE.PlaneGeometry(50, 50);
-        const floorMaterial = new THREE.MeshStandardMaterial({
+        this.floorGeometry = new THREE.PlaneGeometry(50, 50);
+        this.floorMaterial = new THREE.MeshStandardMaterial({
             color: 0x555555,
         });
-        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        const floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial);
         floor.rotation.x = -Math.PI / 2; // Lay the plane flat
         this.scene.add(floor);
 
@@ -80,6 +80,7 @@ export default class HubWorldState extends BaseState {
         if (worldData && worldData.objects) {
             for (const objectData of worldData.objects) {
                 if (objectData.type === 'staticObject') {
+                    console.log("HubWorldState: Calling createStaticObject with scene:", this.scene); // Debug log
                     const entity = await createStaticObject(this.game, this.scene, objectData, this.game.loader);
                     this.entities.push(entity);
                     // Collect interactable objects
@@ -133,12 +134,53 @@ export default class HubWorldState extends BaseState {
         }
     }
 
+    dispose() {
+        this.exit();
+    }
+
     exit() {
         // Clean up scene and entities to free memory
         this.entities.forEach((entity) => entity.destroy());
         this.entities = [];
+
+        // Dispose of floor geometry and material
+        if (this.floorGeometry) {
+            this.floorGeometry.dispose();
+            this.floorGeometry = null;
+        }
+        if (this.floorMaterial) {
+            this.floorMaterial.dispose();
+            this.floorMaterial = null;
+        }
+
+        // Dispose of scene objects and render targets
+        if (this.scene) {
+            this.scene.traverse((object) => {
+                if (object.isMesh) {
+                    if (object.geometry) {
+                        object.geometry.dispose();
+                    }
+                    if (object.material) {
+                        // In case of an array of materials
+                        if (Array.isArray(object.material)) {
+                            object.material.forEach((material) =>
+                                material.dispose(),
+                            );
+                        } else {
+                            object.material.dispose();
+                        }
+                    }
+                }
+            });
+            this.scene = null;
+        }
+
+        // Dispose of cached assets in the loader
+        if (this.game.loader) {
+            this.game.loader.dispose();
+        }
+
         this.player = null;
-        this.scene = null;
         this.camera = null;
         this.interactionManager = null; // Clean up interaction manager
     }

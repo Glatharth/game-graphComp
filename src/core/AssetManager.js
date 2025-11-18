@@ -9,62 +9,82 @@ export default class AssetManager {
     constructor() {
         this.gltfLoader = new GLTFLoader();
         this.textureLoader = new THREE.TextureLoader();
-        /** @type {Map<string, Promise<any>>} */
-        this.cache = new Map(); // Cache stores Promises to avoid race conditions
+        /**
+         * Cache for resolved original assets (THREE.Group for GLTF, THREE.Texture for images).
+         * @type {Map<string, THREE.Group | THREE.Texture>}
+         */
+        this.assetCache = new Map();
+        /**
+         * Cache for promises of assets currently being loaded, to prevent duplicate requests.
+         * @type {Map<string, Promise<THREE.Group | THREE.Texture>>}
+         */
+        this.loadingPromises = new Map();
     }
 
     /**
      * Retrieves an asset from the cache or loads it if not present.
+     * For GLTF models, it returns a clone of the cached original scene.
+     * For textures, it returns the cached original texture.
      * Applies cache-busting to the network request to ensure fresh assets.
      * @param {string} path - The original path to the asset.
-     * @returns {Promise<any>} A promise that resolves with the loaded asset.
+     * @returns {Promise<THREE.Group | THREE.Texture>} A promise that resolves with the loaded asset (or its clone for GLTF).
      */
     async getAsset(path) {
-        if (this.cache.has(path)) {
-            return this.cache.get(path);
+        // If the asset is already loaded and cached, return it (or a clone for GLTF)
+        if (this.assetCache.has(path)) {
+            const asset = this.assetCache.get(path);
+            return asset instanceof THREE.Group ? asset.clone() : asset;
+        }
+
+        // If the asset is currently being loaded, return the existing promise
+        if (this.loadingPromises.has(path)) {
+            // The promise resolves to the original asset, so we need to clone if it's a GLTF
+            return this.loadingPromises.get(path).then(asset => {
+                return asset instanceof THREE.Group ? asset.clone() : asset;
+            });
         }
 
         const fileExtension = path.split('.').pop().toLowerCase();
-        // Apply cache-busting only to the URL for the network request
-        const requestUrl = `${path}?v=${Date.now()}`;
+        const requestUrl = `${path}?v=${Date.now()}`; // Apply cache-busting
 
-        let loadPromise;
+        let loadFunction;
         switch (fileExtension) {
             case 'glb':
             case 'gltf':
-                loadPromise = this.loadGltf(requestUrl);
+                loadFunction = () => this.loadGltf(requestUrl);
                 break;
             case 'png':
             case 'jpg':
             case 'jpeg':
-                loadPromise = this.loadTexture(requestUrl);
+                loadFunction = () => this.loadTexture(requestUrl);
                 break;
             default:
-                loadPromise = Promise.reject(new Error(`Unsupported asset type: ${fileExtension} for path ${path}`));
-                break;
+                return Promise.reject(new Error(`Unsupported asset type: ${fileExtension} for path ${path}`));
         }
 
-        // Store the promise in the cache immediately to prevent duplicate requests
-        this.cache.set(path, loadPromise);
-
-        return loadPromise.catch(error => {
+        // Create a new promise for loading the asset
+        const loadPromise = loadFunction().then(originalAsset => {
+            this.assetCache.set(path, originalAsset); // Cache the original asset
+            this.loadingPromises.delete(path); // Remove from loading promises
+            return originalAsset instanceof THREE.Group ? originalAsset.clone() : originalAsset; // Return clone for GLTF, original for texture
+        }).catch(error => {
             console.error(`Failed to load asset at ${path}:`, error);
-            this.cache.delete(path); // Remove from cache on failure to allow retries
+            this.loadingPromises.delete(path); // Remove from loading promises on failure
             throw error; // Re-throw to propagate the error
         });
+
+        this.loadingPromises.set(path, loadPromise); // Store the promise
+        return loadPromise;
     }
 
     /**
-     * Loads a GLTF/GLB model.
+     * Loads a GLTF/GLB model and returns its original scene (THREE.Group).
      * @param {string} path - The path to the model file (already cache-busted).
-     * @returns {Promise<THREE.Scene>}
+     * @returns {Promise<THREE.Group>}
      */
     async loadGltf(path) {
         const gltf = await this.gltfLoader.loadAsync(path);
-        // We clone the scene so that each placed object is a unique instance.
-        // This prevents all instances from changing when one is modified.
-        const scene = gltf.scene || gltf;
-        return scene.clone();
+        return gltf.scene; // Return the original scene, not a clone
     }
 
     /**
@@ -77,34 +97,54 @@ export default class AssetManager {
     }
 
     /**
-     * Disposes of all cached assets to free up memory.
+     * Disposes of all cached original assets to free up GPU memory.
+     * This should be called when assets are no longer needed, e.g., when changing worlds.
      */
     dispose() {
-        this.cache.forEach((assetPromise) => {
-            assetPromise.then(asset => {
-                if (asset) {
-                    if (asset.traverse) { // Likely a THREE.Object3D
-                        asset.traverse(child => {
-                            if (child.isMesh) {
-                                child.geometry?.dispose();
-                                if (child.material) {
-                                    if (Array.isArray(child.material)) {
-                                        child.material.forEach(m => m.dispose());
-                                    } else {
-                                        child.material.dispose();
-                                    }
-                                }
+        this.assetCache.forEach((asset) => {
+            if (asset instanceof THREE.Group) {
+                // Dispose of geometries and materials within the GLTF scene
+                asset.traverse(child => {
+                    if (child.isMesh) {
+                        if (child.geometry) {
+                            child.geometry.dispose();
+                        }
+                        if (child.material) {
+                            // Handle array of materials
+                            if (Array.isArray(child.material)) {
+                                child.material.forEach(material => {
+                                    this._disposeMaterial(material);
+                                });
+                            } else {
+                                this._disposeMaterial(child.material);
                             }
-                        });
-                    } else if (asset.dispose) { // Likely a texture or material
-                        asset.dispose();
+                        }
                     }
-                }
-            }).catch(() => {
-                // Ignore errors for assets that failed to load
-            });
+                });
+            } else if (asset instanceof THREE.Texture) {
+                asset.dispose();
+            }
+            // console.log(`Disposed asset: ${path}`);
         });
-        this.cache.clear();
+        this.assetCache.clear();
+        this.loadingPromises.clear(); // Clear any pending loads
         console.log('AssetManager disposed all cached assets.');
+    }
+
+    /**
+     * Helper to dispose of a single material and its associated textures.
+     * @param {THREE.Material} material - The material to dispose.
+     */
+    _disposeMaterial(material) {
+        if (material.isMaterial) {
+            // Dispose of textures associated with the material
+            for (const key in material) {
+                const value = material[key];
+                if (value instanceof THREE.Texture) {
+                    value.dispose();
+                }
+            }
+            material.dispose();
+        }
     }
 }

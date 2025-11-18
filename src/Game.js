@@ -18,7 +18,10 @@ export default class Game extends EventEmitter {
 
     setWorld(world) {
         if (this.activeWorld) {
-            // Optional: clean up the old world
+            // Dispose of the old world to free up resources
+            if (typeof this.activeWorld.dispose === 'function') {
+                this.activeWorld.dispose();
+            }
         }
         this.activeWorld = world;
         this.emit('worldChanged', world);

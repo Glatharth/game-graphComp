@@ -10,7 +10,7 @@ import PlayerInputComponent from '../components/PlayerInputComponent.js';
 import PhysicsComponent from '../components/PhysicsComponent.js';
 import PortalComponent from '../components/PortalComponent.js';
 import AnimationComponent from '../components/AnimationComponent.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+// Removed GLTFLoader import as it will be handled by ObjectLoader
 
 /**
  * Creates the player entity.
@@ -21,9 +21,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
  * @returns {Entity}
  */
 export function createPlayer(game, scene, position, animationData) {
-    const player = new Entity(game, scene); // Pass game instance
+    const player = new Entity(game, scene);
 
-    // Set the initial position on the entity's main scene object
     player.sceneObject.position.copy(position);
 
     player.addComponent(new PhysicsComponent(player, 5));
@@ -43,7 +42,7 @@ export function createPlayer(game, scene, position, animationData) {
  * @returns {Entity}
  */
 export function createPortal(game, scene, position, targetState, playerEntity) {
-    const portal = new Entity(game, scene); // Pass game instance
+    const portal = new Entity(game, scene);
 
     const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
     const material = new THREE.MeshStandardMaterial({
@@ -53,7 +52,6 @@ export function createPortal(game, scene, position, targetState, playerEntity) {
     });
     portal.addComponent(new RenderComponent(portal, geometry, material));
 
-    // Set the position on the entity's main scene object
     portal.sceneObject.position.copy(position);
 
     portal.addComponent(
@@ -65,40 +63,42 @@ export function createPortal(game, scene, position, targetState, playerEntity) {
 
 /**
  * Creates a static object from a GLB model.
+ * This function handles loading the GLB, setting its properties, and optimizing materials.
+ * Materials are cached globally via the ObjectLoader to reduce the number of unique WebGL textures,
+ * preventing 'texture units count exceeds' errors when many objects are present.
+ *
  * @param {import('../core/Game.js').default} game - The main game instance.
  * @param {THREE.Scene} scene - The scene where the object will exist.
  * @param {object} objectData - The data for the object, including path, position, rotation, and scale.
+ * @param {string} objectData.path - The path to the GLB model.
+ * @param {string} objectData.model - The name of the model.
+ * @param {object} [objectData.position] - The initial position {x, y, z}.
+ * @param {object} [objectData.rotation] - The initial rotation {x, y, z}.
+ * @param {object} [objectData.scale] - The initial scale {x, y, z}.
  * @param {import('../loaders/ObjectLoader.js').default} loader - The object loader instance.
- * @returns {Promise<Entity>}
+ * @returns {Promise<Entity>} A promise that resolves with the created Entity.
  */
 export async function createStaticObject(game, scene, objectData, loader) {
-    const entity = new Entity(game, scene); // Pass game instance
-    const gltfLoader = new GLTFLoader();
+    const entity = new Entity(game, scene);
+    // const gltfLoader = new GLTFLoader(); // REMOVED: Use loader.getOrCreateGLTF instead
 
-    // Normalize modelPath if it's coming from an old save format
-    let correctedModelPath = objectData.path;
-    const modelName = objectData.model; // Use objectData.model directly for consistency
+    const correctedModelPath = objectData.path;
+    const modelName = objectData.model;
     
-    // Get properties data (including light)
     const properties = loader.getPropertiesData(modelName);
-    // Get animation data
     const animationData = loader.getAnimationData(modelName);
 
-    const gltf = await gltfLoader.loadAsync(correctedModelPath);
-    const model = gltf.scene;
-    // Only add to scene if scene is still active
-    if (scene) {
-        scene.add(model);
-    }
-    entity.sceneObject.add(model);
+    // Use the provided loader to get the GLTF model
+    const model = await loader.getOrCreateGLTF(correctedModelPath);
 
-    // Store model name in userData for easier lookup
+    // if (scene) { // REMOVED: Model should only be added to entity.sceneObject
+    //     scene.add(model);
+    // }
+    entity.sceneObject.add(model); // Correct: Add model to entity's sceneObject
+
     entity.sceneObject.userData.model = modelName;
-    // Store a reference to the entity on the model itself for interaction lookup
     model.userData.entity = entity;
 
-
-    // Set position, rotation, and scale from the object data
     if (objectData.position) {
         entity.sceneObject.position.set(
             objectData.position.x,
@@ -122,22 +122,25 @@ export async function createStaticObject(game, scene, objectData, loader) {
     }
 
     model.traverse((c) => {
-        c.castShadow = true;
-        c.receiveShadow = true;
+        if (c.isMesh) {
+            c.castShadow = true;
+            c.receiveShadow = true;
+
+            // Use the ObjectLoader's material cache
+            if (!(c.material instanceof THREE.MeshStandardMaterial)) {
+                c.material = loader.getOrCreateStandardMaterial(c.material);
+            }
+        }
     });
 
-    // Add AnimationComponent if animation data exists
     if (animationData) {
         const animComponent = new AnimationComponent(entity, scene, {
             path: correctedModelPath,
             animations: animationData.animations
         });
         entity.addComponent(animComponent);
-    } else {
-        // console.log(`factories.js: createStaticObject - No animation data found for "${modelName}".`);
     }
 
-    // Add Light if properties data exists
     if (properties && properties.light) {
         const lightData = properties.light;
         let light;
@@ -151,15 +154,12 @@ export async function createStaticObject(game, scene, objectData, loader) {
                 );
                 break;
             case 'spot':
-                light = new THREE.PointLight( // Changed to PointLight for simplicity, SpotLight requires target
+                light = new THREE.PointLight(
                     lightData.color,
                     lightData.intensity,
                     lightData.distance,
                     lightData.decay,
                 );
-                // If you need a SpotLight, you'll need to define its target
-                // light.target.position.set(targetX, targetY, targetZ);
-                // entity.sceneObject.add(light.target);
                 break;
             case 'rectArea':
                 light = new THREE.RectAreaLight(

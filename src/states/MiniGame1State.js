@@ -15,6 +15,10 @@ export default class MiniGame1State extends BaseState {
     constructor(game) {
         super(game);
         this.returnTimer = 5; // 5 seconds
+        this.plane = null; // To store the plane mesh
+        this.geometry = null; // To store the plane geometry
+        this.material = null; // To store the plane material
+        this.texture = null; // To store the canvas texture
     }
 
     enter() {
@@ -37,14 +41,14 @@ export default class MiniGame1State extends BaseState {
         context.font = '24px Arial';
         context.fillText('Returning to Hub shortly...', 256, 150);
 
-        const texture = new THREE.CanvasTexture(canvas);
-        const material = new THREE.MeshBasicMaterial({
-            map: texture,
+        this.texture = new THREE.CanvasTexture(canvas);
+        this.material = new THREE.MeshBasicMaterial({
+            map: this.texture,
             transparent: true,
         });
-        const geometry = new THREE.PlaneGeometry(2, 1);
-        const plane = new THREE.Mesh(geometry, material);
-        this.scene.add(plane);
+        this.geometry = new THREE.PlaneGeometry(2, 1);
+        this.plane = new THREE.Mesh(this.geometry, this.material);
+        this.scene.add(this.plane);
 
         this.returnTimer = 5;
     }
@@ -56,8 +60,55 @@ export default class MiniGame1State extends BaseState {
         }
     }
 
+    dispose() {
+        this.exit();
+    }
+
     exit() {
-        this.scene = null;
+        // Dispose of the plane's geometry, material, and texture
+        if (this.plane) {
+            this.scene.remove(this.plane);
+            this.plane = null;
+        }
+        if (this.geometry) {
+            this.geometry.dispose();
+            this.geometry = null;
+        }
+        if (this.material) {
+            this.material.dispose();
+            this.material = null;
+        }
+        if (this.texture) {
+            this.texture.dispose();
+            this.texture = null;
+        }
+
+        // Dispose of scene objects and render targets
+        if (this.scene) {
+            this.scene.traverse((object) => {
+                if (object.isMesh) {
+                    if (object.geometry) {
+                        object.geometry.dispose();
+                    }
+                    if (object.material) {
+                        if (Array.isArray(object.material)) {
+                            object.material.forEach((material) =>
+                                material.dispose(),
+                            );
+                        } else {
+                            object.material.dispose();
+                        }
+                    }
+                }
+            });
+            this.scene = null;
+        }
+
+        // Dispose of cached assets in the loader if it exists
+        if (this.game.loader) {
+            this.game.loader.dispose();
+        }
+
         this.camera = null;
     }
 }

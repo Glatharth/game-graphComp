@@ -8,6 +8,8 @@
 import * as THREE from 'three';
 import BaseState from './BaseState.js';
 import AssetManager from '../core/AssetManager.js';
+import { createStaticObject } from '../entities/factories.js';
+import ObjectLoader from '../loaders/ObjectLoader.js';
 
 const LOCAL_STORAGE_KEY = 'editor_worlds';
 
@@ -52,11 +54,18 @@ export default class EditorState extends BaseState {
         this.thumbnailCache = new Map();
         this.gridSize = 1;
         this.gridHelper = null;
+        this.mapLights = []; // Array to store references to lights from the loaded map
+        this.mapLightsEnabled = true; // State for toggling map lights
 
         // Drag selection variables
         this.isDraggingSelection = false;
         this.selectionRect = { startX: 0, startY: 0, currentX: 0, currentY: 0 };
         this.selectionDiv = null;
+
+        // Initialize the loader if it's not already on the game object
+        if (!this.game.loader) {
+            this.game.loader = new ObjectLoader();
+        }
 
         // Bind the context of 'this' for event handlers
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -69,6 +78,13 @@ export default class EditorState extends BaseState {
 
     // --- State Lifecycle ---
 
+    /**
+     * Enters the editor state, setting up the scene, camera, lighting, UI, and input listeners.
+     * Initializes editor-specific lighting including a subtle ambient light.
+     * @param {object} [params={}] - Optional parameters for entering the state.
+     * @param {object} [params.worldData] - Initial world data to load.
+     * @param {string} [params.worldName] - Name of the initial world.
+     */
     async enter(params = {}) {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x2b2b2b);
@@ -78,6 +94,21 @@ export default class EditorState extends BaseState {
         this.updateCameraProjection();
         this.camera.position.set(25, 25, 25);
         this.camera.lookAt(this.scene.position);
+
+        // Editor-specific lighting (always on)
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        this.scene.add(ambientLight);
+
+        const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.7);
+        this.scene.add(hemisphereLight);
+
+        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight1.position.set(10, 15, 5);
+        this.scene.add(directionalLight1);
+
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
+        directionalLight2.position.set(-10, 10, -10);
+        this.scene.add(directionalLight2);
 
         this.editorFloor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshBasicMaterial({ visible: false }));
         this.editorFloor.rotation.x = -Math.PI / 2;
@@ -91,6 +122,7 @@ export default class EditorState extends BaseState {
         this.populateAssetBrowser();
         this.setupInputListeners();
         await this.loadWorldList();
+        await this.game.loader.loadPropertiesData('assets/properties.json');
 
         if (params.worldData) {
             await this.loadWorldData(params.worldData, params.worldName);
@@ -99,28 +131,144 @@ export default class EditorState extends BaseState {
         window.addEventListener('keydown', this.handleKeyDown);
     }
 
+    /**
+     * Disposes of all Three.js resources and cleans up the state.
+     */
+    dispose() {
+        this.exit();
+    }
+
+    /**
+     * Exits the editor state, cleaning up the scene, UI, and event listeners.
+     */
     exit() {
-        this.clearScene();
-        if (this.gridHelper) this.scene.remove(this.gridHelper);
-        if (this.editorFloor) this.scene.remove(this.editorFloor);
-        if (this.thumbnailRenderer) this.thumbnailRenderer.dispose();
+        this.clearScene(); // Clears editable objects, preview objects, and their resources
+
+        // Dispose of editor-specific Three.js objects
+        if (this.gridHelper) {
+            this._disposeThreeObject(this.gridHelper);
+            this.gridHelper = null;
+        }
+        if (this.editorFloor) {
+            this._disposeThreeObject(this.editorFloor);
+            this.editorFloor = null;
+        }
+
+        // Dispose of the thumbnail renderer
+        if (this.thumbnailRenderer) {
+            this.thumbnailRenderer.dispose();
+            this.thumbnailRenderer = null;
+        }
         this.thumbnailCache.clear();
+
+        // Dispose of cached assets in the AssetManager and ObjectLoader
         this.assetManager.dispose();
-        if (this.uiContainer) this.uiContainer.remove();
+        if (this.game.loader) {
+            this.game.loader.dispose();
+        }
+
+        // Remove UI elements
+        if (this.uiContainer) {
+            this.uiContainer.remove();
+            this.uiContainer = null;
+        }
+        if (this.selectionDiv) {
+            this.selectionDiv.remove();
+            this.selectionDiv = null;
+        }
+
+        // Remove event listeners
         this.removeInputListeners();
         window.removeEventListener('keydown', this.handleKeyDown);
+
+        // Nullify remaining references
         this.scene = null;
         this.camera = null;
         this.selectedObject = null;
         this.selectedObjects = [];
-        if (this.selectionDiv) {
-            this.selectionDiv.remove();
-            this.selectionDiv = null;
+        this.mapLights = [];
+    }
+
+    /**
+     * Helper function to recursively dispose of a Three.js object's geometries, materials, and textures.
+     * Only disposes of materials that are not marked as cached.
+     * @param {THREE.Object3D} object - The Three.js object to dispose.
+     */
+    _disposeThreeObject(object) {
+        if (!object) return;
+
+        object.traverse((child) => {
+            if (child.isMesh) {
+                if (child.geometry) {
+                    child.geometry.dispose();
+                }
+                if (child.material) {
+                    const disposeMaterial = (material) => {
+                        if (material && material.isMaterial && !material.userData.isCachedMaterial) {
+                            // Dispose of textures associated with the material
+                            for (const key in material) {
+                                const value = material[key];
+                                if (value instanceof THREE.Texture) {
+                                    value.dispose();
+                                }
+                            }
+                            material.dispose();
+                        }
+                    };
+
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(disposeMaterial);
+                    } else {
+                        disposeMaterial(child.material);
+                    }
+                }
+            }
+        });
+
+        // Remove from parent if it has one
+        if (object.parent) {
+            object.parent.remove(object);
+        }
+    }
+
+    /**
+     * Helper function to dispose of a temporary scene and camera used for rendering.
+     * @param {THREE.Scene} scene - The temporary scene to dispose.
+     * @param {THREE.Camera} camera - The temporary camera to dispose.
+     */
+    _disposeTemporarySceneAndCamera(scene, camera) {
+        if (scene) {
+            scene.traverse((object) => {
+                if (object.isMesh) {
+                    if (object.geometry) object.geometry.dispose();
+                    if (object.material) {
+                        if (Array.isArray(object.material)) {
+                            object.material.forEach(m => m.dispose());
+                        } else {
+                            object.material.dispose();
+                        }
+                    }
+                }
+            });
+            // Remove all children from the scene
+            while (scene.children.length > 0) {
+                const child = scene.children[0];
+                scene.remove(child);
+                this._disposeThreeObject(child); // Ensure child resources are also disposed
+            }
+        }
+        // Cameras don't have a dispose method in Three.js, but we can nullify the reference
+        if (camera) {
+            camera = null;
         }
     }
 
     // --- UI Methods ---
 
+    /**
+     * Creates and appends the editor user interface to the document body.
+     * Sets up tab navigation, tool buttons, and property panels.
+     */
     createUI() {
         this.uiContainer = document.createElement('div');
         this.uiContainer.id = 'editor-ui';
@@ -153,6 +301,9 @@ export default class EditorState extends BaseState {
                     <input type="text" id="interaction-id-input" class="property-input" placeholder="e.g., showMessage">
                     <label for="interaction-data-input">Interaction Data (JSON)</label>
                     <textarea id="interaction-data-input" class="property-input"></textarea>
+                </div>
+                <div class="editor-controls">
+                    <button id="toggle-map-lights-btn" class="control-btn" title="Toggle Map Lights"><span class="material-icons">lightbulb</span>Toggle Map Lights</button>
                 </div>
             </div>
 
@@ -245,11 +396,16 @@ export default class EditorState extends BaseState {
         document.getElementById('export-world-btn').addEventListener('click', () => this.exportWorldToFile());
         document.getElementById('asset-category-select').addEventListener('change', (e) => this.filterAssets(e.target.value, document.getElementById('asset-search-input').value));
         document.getElementById('asset-search-input').addEventListener('input', (e) => this.filterAssets(document.getElementById('asset-category-select').value, e.target.value));
+        document.getElementById('toggle-map-lights-btn').addEventListener('click', () => this.toggleMapLights());
     }
 
+    /**
+     * Displays a toast notification to the user.
+     * @param {string} message - The message to display.
+     * @param {'info'|'success'|'warning'|'error'} [type='info'] - The type of toast, influencing its appearance.
+     */
     showToast(message, type = 'info') {
         const toastContainer = document.getElementById('toast-container');
-        // Only show toast if the UI container still exists
         if (!toastContainer) {
             console.warn("Attempted to show toast but toastContainer is null. State might be exiting.");
             return;
@@ -267,6 +423,10 @@ export default class EditorState extends BaseState {
         }, 100);
     }
 
+    /**
+     * Updates the properties panel based on the currently selected object(s).
+     * Displays interaction ID and data for single selections, or a generic message for multi-selections.
+     */
     updatePropertiesPanel() {
         const panel = document.getElementById('properties-panel');
         if (this.selectedObjects.length > 1) {
@@ -282,6 +442,11 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Updates the interaction properties (ID or Data) of all currently selected objects.
+     * @param {'id'|'data'} type - The type of interaction property to update ('id' or 'data').
+     * @param {string} value - The new value for the property.
+     */
     updateSelectedObjectInteraction(type, value) {
         if (this.selectedObjects.length === 0) return;
 
@@ -296,10 +461,13 @@ export default class EditorState extends BaseState {
                 }
             }
         });
-        // Update the panel for the primary selected object or show generic message
         this.updatePropertiesPanel();
     }
 
+    /**
+     * Sets the current editor mode (select, stamp, line, square).
+     * @param {'select'|'stamp'|'line'|'square'} mode - The new editor mode.
+     */
     setEditorMode(mode) {
         if (this.editorMode === mode) return;
         this.uiContainer.querySelector('.tool-btn.active').classList.remove('active');
@@ -311,12 +479,21 @@ export default class EditorState extends BaseState {
 
     // --- Asset & Thumbnail Management ---
 
+    /**
+     * Determines the object type ('floor', 'wall', or 'prop') based on its model path.
+     * @param {string} modelPath - The path to the 3D model.
+     * @returns {'floor'|'wall'|'prop'} The determined object type.
+     */
     getObjectType(modelPath) {
         if (modelPath.includes('floor')) return 'floor';
         if (modelPath.includes('wall')) return 'wall';
         return 'prop';
     }
 
+    /**
+     * Populates the asset browser UI with available 3D models, categorized and searchable.
+     * Generates thumbnails for assets if not already cached.
+     */
     populateAssetBrowser() {
         this.assetData = {
             arcade: { path: 'assets/arcade', assets: [ 'wall.glb', 'floor.glb', 'column.glb', 'prizes.glb', 'pinball.glb', 'air-hockey.glb', 'prize-wheel.glb', 'wall-corner.glb', 'wall-window.glb', 'claw-machine.glb', 'cash-register.glb', 'dance-machine.glb', 'arcade-machine.glb', 'ticket-machine.glb', 'basketball-game.glb', 'character-gamer.glb', 'vending-machine.glb', 'gambling-machine.glb', 'wall-door-rotate.glb', 'character-employee.glb' ] },
@@ -359,6 +536,11 @@ export default class EditorState extends BaseState {
         this.filterAssets(categorySelect.value, '');
     }
 
+    /**
+     * Filters the displayed assets in the asset browser based on category and search term.
+     * @param {string} category - The category to filter by.
+     * @param {string} searchTerm - The search term to filter by.
+     */
     filterAssets(category, searchTerm) {
         const assetItems = document.querySelectorAll('.asset-item');
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
@@ -370,23 +552,34 @@ export default class EditorState extends BaseState {
         });
     }
 
+    /**
+     * Selects an asset for stamping, updating the current stamp asset and its preview.
+     * @param {HTMLElement} assetItem - The HTML element representing the selected asset.
+     */
     async selectStampAsset(assetItem) {
         const currentSelected = this.uiContainer.querySelector('.asset-item.selected');
         if (currentSelected) currentSelected.classList.remove('selected');
         assetItem.classList.add('selected');
         this.currentStampAsset = assetItem.dataset.modelPath;
 
-        if (this.previewObject) this.disposeObject(this.previewObject);
+        if (this.previewObject) this._disposeThreeObject(this.previewObject);
 
         try {
             const model = await this.assetManager.getAsset(this.currentStampAsset);
             this.previewObject = model.clone();
             this.previewObject.traverse(child => {
                 if (child.isMesh) {
-                    child.material = new THREE.MeshBasicMaterial({ color: 0x00ff00, opacity: 0.5, transparent: true, wireframe: true });
+                    // Use a material that reacts to light for the preview
+                    child.material = new THREE.MeshStandardMaterial({
+                        color: 0x00ff00, // Green for preview
+                        emissive: 0x00ff00, // Make it glow slightly
+                        emissiveIntensity: 0.2,
+                        transparent: true,
+                        opacity: 0.5,
+                        wireframe: true // Keep wireframe for preview
+                    });
                 }
             });
-            // Only add to scene if scene is still active
             if (this.scene) {
                 this.scene.add(this.previewObject);
             }
@@ -397,11 +590,20 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Updates the visibility of the preview object based on the current editor mode.
+     */
     updatePreviewObjectVisibility() {
         if (!this.previewObject) return;
         this.previewObject.visible = ['stamp', 'line', 'square'].includes(this.editorMode);
     }
 
+    /**
+     * Generates a thumbnail image for a given 3D model path.
+     * Caches generated thumbnails to avoid redundant rendering.
+     * @param {string} modelPath - The path to the 3D model.
+     * @returns {Promise<string>} A promise that resolves with the data URL of the thumbnail image.
+     */
     async generateThumbnail(modelPath) {
         if (this.thumbnailCache.has(modelPath)) return this.thumbnailCache.get(modelPath);
         if (!this.thumbnailRenderer) {
@@ -409,6 +611,11 @@ export default class EditorState extends BaseState {
             this.thumbnailRenderer.setSize(128, 128);
         }
         const scene = new THREE.Scene();
+        scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1).normalize();
+        scene.add(directionalLight);
+
         const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
         try {
             const model = await this.assetManager.getAsset(modelPath);
@@ -424,13 +631,20 @@ export default class EditorState extends BaseState {
             this.thumbnailRenderer.render(scene, camera);
             const dataUrl = this.thumbnailRenderer.domElement.toDataURL('image/png');
             this.thumbnailCache.set(modelPath, dataUrl);
-            this.disposeObject(model);
+            this._disposeThreeObject(model); // Dispose the cloned model used for thumbnail
+            this._disposeTemporarySceneAndCamera(scene, camera); // Dispose temporary scene and camera
             return dataUrl;
-        } catch (error) { return 'about:blank'; }
+        } catch (error) {
+            this._disposeTemporarySceneAndCamera(scene, camera); // Ensure disposal even on error
+            return 'about:blank';
+        }
     }
 
     // --- Input & Mode Handlers ---
 
+    /**
+     * Sets up event listeners for user input on the canvas.
+     */
     setupInputListeners() {
         const canvas = this.game.renderer.domElement;
         canvas.addEventListener('pointerdown', this.onPointerDown);
@@ -440,6 +654,9 @@ export default class EditorState extends BaseState {
         canvas.addEventListener('wheel', this.onWheel, { passive: false });
     }
 
+    /**
+     * Removes event listeners for user input from the canvas.
+     */
     removeInputListeners() {
         const canvas = this.game.renderer.domElement;
         canvas.removeEventListener('pointerdown', this.onPointerDown);
@@ -449,18 +666,26 @@ export default class EditorState extends BaseState {
         canvas.removeEventListener('wheel', this.onWheel);
     }
 
+    /**
+     * Handles keyboard key down events for editor actions.
+     * Supports rotation, highlight toggle, and deletion of selected objects.
+     * @param {KeyboardEvent} event - The keyboard event.
+     */
     handleKeyDown(event) {
-        // Apply to all selected objects
         const targets = this.selectedObjects.length > 0 ? this.selectedObjects : (this.selectedObject ? [this.selectedObject] : []);
         if (targets.length === 0) return;
 
         switch (event.key.toLowerCase()) {
             case 'y': targets.forEach(obj => obj.rotation.y += Math.PI / 2); break;
             case 'h': this.toggleHighlight(targets); break;
-            case 'delete': targets.forEach(obj => this.deleteObject(obj)); this.deselectAllObjects(); break;
+            case 'delete': this.deleteSelectedObject(); break;
         }
     }
 
+    /**
+     * Handles pointer down events for object selection, dragging, and shape drawing.
+     * @param {PointerEvent} event - The pointer event.
+     */
     onPointerDown(event) {
         if (event.target.closest('#editor-ui')) return;
         this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -477,13 +702,13 @@ export default class EditorState extends BaseState {
 
         if (event.button === 0) { // Left mouse button
             this.isLeftMouseButtonDown = true;
-            
+
             if (this.editorMode === 'select') {
                 const intersects = this.raycaster.intersectObjects(this.editableObjects, true);
                 if (intersects.length > 0) {
                     let topLevelObject = intersects[0].object;
                     while (topLevelObject.parent && !this.editableObjects.includes(topLevelObject)) topLevelObject = topLevelObject.parent;
-                    
+
                     if (event.shiftKey) {
                         // Shift + Click for multi-selection
                         if (this.selectedObjects.includes(topLevelObject)) {
@@ -498,7 +723,7 @@ export default class EditorState extends BaseState {
                             this.selectObject(topLevelObject);
                         }
                     }
-                    
+
                     this.isDraggingObject = true;
                     // Remove all selected objects from grid for dragging
                     this.selectedObjects.forEach(obj => this.removeObjectFromGrid(obj));
@@ -534,6 +759,10 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer move events for camera panning, drag selection, and object placement/preview.
+     * @param {PointerEvent} event - The pointer event.
+     */
     onPointerMove(event) {
         this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -543,7 +772,7 @@ export default class EditorState extends BaseState {
             return;
         }
 
-        if (this.isLeftMouseButtonDown && this.isDraggingSelection) { // Only update selection div if drag selection is active
+        if (this.isLeftMouseButtonDown && this.isDraggingSelection) {
             this.selectionRect.currentX = event.clientX;
             this.selectionRect.currentY = event.clientY;
             this.updateSelectionDiv();
@@ -575,6 +804,10 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer up events, finalizing drag selections, shape drawing, or object dragging.
+     * @param {PointerEvent} event - The pointer event.
+     */
     onPointerUp(event) {
         if (event.button === 2) this.isPanning = false;
         if (event.button === 0) {
@@ -594,6 +827,9 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Updates the visual representation of the drag selection rectangle.
+     */
     updateSelectionDiv() {
         const minX = Math.min(this.selectionRect.startX, this.selectionRect.currentX);
         const minY = Math.min(this.selectionRect.startY, this.selectionRect.currentY);
@@ -627,6 +863,10 @@ export default class EditorState extends BaseState {
         return null;
     }
 
+    /**
+     * Processes the completed drag selection, selecting all editable objects within the drawn rectangle.
+     * @param {PointerEvent} event - The pointer event that ended the drag.
+     */
     processDragSelection(event) {
         const startPoint = this.screenToWorldPlane(this.selectionRect.startX, this.selectionRect.startY);
         const endPoint = this.screenToWorldPlane(this.selectionRect.currentX, this.selectionRect.currentY);
@@ -663,6 +903,10 @@ export default class EditorState extends BaseState {
         this.updatePropertiesPanel();
     }
 
+    /**
+     * Handles mouse wheel events for camera zooming.
+     * @param {WheelEvent} event - The wheel event.
+     */
     onWheel(event) {
         if (event.target.closest('#editor-ui')) return;
         event.preventDefault();
@@ -671,15 +915,21 @@ export default class EditorState extends BaseState {
         this.updateCameraProjection();
     }
 
+    /**
+     * Updates the camera's orthographic projection based on the current zoom level and aspect ratio.
+     */
     updateCameraProjection() {
         const aspect = window.innerWidth / window.innerHeight;
-        this.camera.left = -this.zoomLevel * aspect;
-        this.camera.right = this.zoomLevel * aspect;
+        this.camera.left = -aspect * this.zoomLevel;
+        this.camera.right = aspect * this.zoomLevel;
         this.camera.top = this.zoomLevel;
         this.camera.bottom = -this.zoomLevel;
         this.camera.updateProjectionMatrix();
     }
 
+    /**
+     * Handles camera panning based on mouse movement while the right button is pressed.
+     */
     handleCameraPan() {
         const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
         const currentPoint = new THREE.Vector3();
@@ -693,37 +943,38 @@ export default class EditorState extends BaseState {
 
     // --- Mode-Specific Logic ---
 
+    /**
+     * Handles pointer down events when in 'select' mode.
+     * Manages single and multi-selection of objects, and initiates object dragging or drag selection.
+     * @param {PointerEvent} event - The pointer event.
+     */
     handleSelectModePointerDown(event) {
         const intersects = this.raycaster.intersectObjects(this.editableObjects, true);
         if (intersects.length > 0) {
             let topLevelObject = intersects[0].object;
             while (topLevelObject.parent && !this.editableObjects.includes(topLevelObject)) topLevelObject = topLevelObject.parent;
-            
+
             if (event.shiftKey) {
-                // Shift + Click for multi-selection
                 if (this.selectedObjects.includes(topLevelObject)) {
-                    this.deselectObject(topLevelObject); // Deselect if already selected
+                    this.deselectObject(topLevelObject);
                 } else {
-                    this.selectObject(topLevelObject, true); // Add to selection
+                    this.selectObject(topLevelObject, true);
                 }
             } else {
-                // Single click for single selection
                 if (!this.selectedObjects.includes(topLevelObject)) {
                     this.deselectAllObjects();
                     this.selectObject(topLevelObject);
                 }
             }
-            
+
             this.isDraggingObject = true;
-            // Remove all selected objects from grid for dragging
             this.selectedObjects.forEach(obj => this.removeObjectFromGrid(obj));
 
             const intersectionPoint = new THREE.Vector3();
             this.raycaster.ray.intersectPlane(this.dragPlane, intersectionPoint);
-            this.dragOffset.subVectors(this.selectedObject.position, intersectionPoint); // Drag offset relative to primary selected object
+            this.dragOffset.subVectors(this.selectedObject.position, intersectionPoint);
         } else {
-            // Clicked on empty space
-            if (event.shiftKey) { // Only start drag selection if Shift is held
+            if (event.shiftKey) {
                 this.deselectAllObjects();
                 this.isDraggingSelection = true;
                 this.selectionRect.startX = event.clientX;
@@ -734,19 +985,21 @@ export default class EditorState extends BaseState {
                 this.selectionDiv.style.height = '0px';
                 this.selectionDiv.style.display = 'block';
             } else {
-                // If not shift and no object clicked, just clear selection
                 this.deselectAllObjects();
             }
         }
     }
 
+    /**
+     * Handles pointer move events when in 'select' mode, managing dragging of selected objects.
+     */
     handleSelectModePointerMove() {
         if (this.isDraggingObject && this.selectedObjects.length > 0) {
             const intersectPoint = new THREE.Vector3();
             if (this.raycaster.ray.intersectPlane(this.dragPlane, intersectPoint)) {
                 const newPosition = new THREE.Vector3().copy(intersectPoint).add(this.dragOffset);
                 const delta = new THREE.Vector3().subVectors(newPosition, this.selectedObject.position);
-                
+
                 this.selectedObjects.forEach(obj => {
                     obj.position.add(delta);
                 });
@@ -754,10 +1007,12 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer up events when in 'select' mode, snapping dragged objects to the grid.
+     */
     handleSelectModePointerUp() {
         if (this.selectedObjects.length > 0) {
             this.selectedObjects.forEach(obj => {
-                // Snap to grid and update occupied cell on drop
                 const gridX = Math.round(obj.position.x / this.gridSize);
                 const gridZ = Math.round(obj.position.z / this.gridSize);
                 obj.position.x = gridX * this.gridSize;
@@ -767,6 +1022,9 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer move events when in 'stamp' mode, continuously placing objects.
+     */
     handleStampModePointerMove() {
         if (!this.currentStampAsset) return;
         const intersects = this.raycaster.intersectObject(this.editorFloor);
@@ -780,6 +1038,10 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer down events when in shape drawing modes ('line', 'square'),
+     * initiating the shape drawing process.
+     */
     handleShapeModePointerDown() {
         if (!this.currentStampAsset) return;
         const intersects = this.raycaster.intersectObject(this.editorFloor);
@@ -790,6 +1052,9 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer move events when in shape drawing modes, updating the shape preview.
+     */
     handleShapeModePointerMove() {
         if (!this.isDrawingShape || !this.currentStampAsset) return;
         const intersects = this.raycaster.intersectObject(this.editorFloor);
@@ -800,8 +1065,11 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Handles pointer up events when in shape drawing modes, finalizing and placing the drawn shape.
+     */
     handleShapeModePointerUp() {
-        this.previewObjects.forEach(obj => this.scene.remove(obj));
+        this.previewObjects.forEach(obj => this._disposeThreeObject(obj));
         this.previewObjects = [];
         const intersects = this.raycaster.intersectObject(this.editorFloor);
         if (intersects.length > 0) {
@@ -812,21 +1080,36 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Updates the visual preview of a shape being drawn.
+     * @param {number} startX - Starting X grid coordinate.
+     * @param {number} startZ - Starting Z grid coordinate.
+     * @param {number} endX - Current X grid coordinate.
+     * @param {number} endZ - Current Z grid coordinate.
+     */
     updateShapePreview(startX, startZ, endX, endZ) {
-        this.previewObjects.forEach(obj => this.scene.remove(obj));
+        this.previewObjects.forEach(obj => this._disposeThreeObject(obj));
         this.previewObjects = [];
         const gridPositions = this.getGridPositionsForShape(startX, startZ, endX, endZ);
         gridPositions.forEach(pos => {
             const cellKey = `${pos.x},${pos.y}`;
             const isOccupied = this.isCellOccupied(cellKey, this.getObjectType(this.currentStampAsset));
             const color = isOccupied ? 0xff0000 : 0x00ff00;
-            const previewMesh = new THREE.Mesh(new THREE.BoxGeometry(this.gridSize, 0.1, this.gridSize), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: true }));
+            const previewMesh = new THREE.Mesh(new THREE.BoxGeometry(this.gridSize, 0.1, this.gridSize), new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.5, wireframe: true }));
             previewMesh.position.set(pos.x * this.gridSize, 0.05, pos.y * this.gridSize);
             this.scene.add(previewMesh);
             this.previewObjects.push(previewMesh);
         });
     }
 
+    /**
+     * Calculates the grid positions for a given shape (line or square) between two points.
+     * @param {number} startX - Starting X grid coordinate.
+     * @param {number} startZ - Starting Z grid coordinate.
+     * @param {number} endX - Ending X grid coordinate.
+     * @param {number} endZ - Ending Z grid coordinate.
+     * @returns {Array<{x: number, y: number}>} An array of grid positions.
+     */
     getGridPositionsForShape(startX, startZ, endX, endZ) {
         const positions = [];
         if (this.editorMode === 'line') {
@@ -853,6 +1136,14 @@ export default class EditorState extends BaseState {
 
     // --- Object Placement & Manipulation ---
 
+    /**
+     * Checks if a given grid cell is occupied by an object of a conflicting type.
+     * Floor objects can coexist with other types, but not with other floor objects.
+     * Other object types cannot coexist with any other object in the same cell.
+     * @param {string} cellKey - The unique key for the grid cell (e.g., "x,z").
+     * @param {'floor'|'wall'|'prop'} newObjectType - The type of the object attempting to occupy the cell.
+     * @returns {boolean} True if the cell is occupied by a conflicting object, false otherwise.
+     */
     isCellOccupied(cellKey, newObjectType) {
         const cellObjects = this.occupiedGridCells.get(cellKey) || [];
         if (newObjectType === 'floor') {
@@ -861,6 +1152,10 @@ export default class EditorState extends BaseState {
         return cellObjects.some(obj => obj.type !== 'floor');
     }
 
+    /**
+     * Adds an object to the internal grid tracking system.
+     * @param {THREE.Object3D} object - The Three.js object to add.
+     */
     addObjectToGrid(object) {
         const gridX = Math.round(object.position.x / this.gridSize);
         const gridZ = Math.round(object.position.z / this.gridSize);
@@ -875,6 +1170,10 @@ export default class EditorState extends BaseState {
         this.occupiedGridCells.set(cellKey, cellObjects);
     }
 
+    /**
+     * Removes an object from the internal grid tracking system.
+     * @param {THREE.Object3D} object - The Three.js object to remove.
+     */
     removeObjectFromGrid(object) {
         const cellKey = object.userData.gridKey;
         if (!cellKey) return;
@@ -890,8 +1189,18 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Places a 3D object in the scene at specified coordinates.
+     * Normalizes model paths and sets essential user data for editor functionality.
+     * @param {string} modelPath - The path to the GLB model asset.
+     * @param {number} x - The X coordinate for placement.
+     * @param {number} z - The Z coordinate for placement.
+     * @param {number} [rotationY=0] - The rotation around the Y-axis in radians.
+     * @param {object} [scale={x:1, y:1, z:1}] - The scale of the object.
+     * @param {string} [interactionId=null] - An optional ID for interaction logic.
+     * @param {object} [interactionData=null] - Optional data for interaction logic.
+     */
     async placeObject(modelPath, x, z, rotationY = 0, scale = {x:1, y:1, z:1}, interactionId = null, interactionData = null) {
-        // Normalize modelPath if it's coming from an old save format
         let correctedModelPath = modelPath;
         if (modelPath.startsWith('public/worlds/arcade/')) {
             correctedModelPath = modelPath.replace('public/worlds/arcade/', 'assets/arcade/');
@@ -907,25 +1216,31 @@ export default class EditorState extends BaseState {
         if (this.isCellOccupied(cellKey, newObjectType)) return;
 
         try {
-            const model = await this.assetManager.getAsset(correctedModelPath);
-            const modelInstance = model.clone();
+            const entity = await createStaticObject(this.game, this.scene, {
+                path: correctedModelPath,
+                model: correctedModelPath.split('/').pop().replace('.glb', ''),
+                position: { x, y: 0, z },
+                rotation: { x: 0, y: rotationY, z: 0 },
+                scale: scale,
+                interactionId: interactionId,
+                interactionData: interactionData
+            }, this.game.loader);
 
-            const bbox = new THREE.Box3().setFromObject(modelInstance);
-            const center = bbox.getCenter(new THREE.Vector3());
-            const size = bbox.getSize(new THREE.Vector3());
+            const modelRoot = entity.sceneObject;
 
-            modelInstance.position.set(gridX * this.gridSize, 0, gridZ * this.gridSize);
-            modelInstance.position.y -= (center.y - size.y / 2);
-            modelInstance.rotation.y = rotationY;
-            modelInstance.scale.set(scale.x, scale.y, scale.z);
-            modelInstance.userData = { modelPath: correctedModelPath, type: 'staticObject', isEditableAsset: true, interactionId, interactionData };
+            modelRoot.userData.model = correctedModelPath.split('/').pop().replace('.glb', '');
+            modelRoot.userData.modelPath = correctedModelPath;
+            modelRoot.userData.entity = entity;
+            modelRoot.userData.isEditableAsset = true;
 
-            // Only add to scene if scene is still active
-            if (this.scene) {
-                this.scene.add(modelInstance);
-            }
-            this.editableObjects.push(modelInstance);
-            this.addObjectToGrid(modelInstance);
+            modelRoot.traverse((child) => {
+                if (child.isLight) {
+                    this.mapLights.push(child);
+                }
+            });
+
+            this.editableObjects.push(modelRoot);
+            this.addObjectToGrid(modelRoot);
         } catch (error) {
             console.error(`Error placing object from ${correctedModelPath}:`, error);
             this.showToast(`Failed to place asset: ${correctedModelPath.split('/').pop()}`, 'error');
@@ -945,7 +1260,7 @@ export default class EditorState extends BaseState {
             this.selectedObjects.push(object);
             this.applyHighlight(object);
         }
-        this.selectedObject = object; // Keep track of the last selected object as primary
+        this.selectedObject = object;
         this.updatePropertiesPanel();
     }
 
@@ -975,11 +1290,13 @@ export default class EditorState extends BaseState {
         this.updatePropertiesPanel();
     }
 
+    /**
+     * Deletes all currently selected objects from the scene, grid, and editable objects list.
+     */
     deleteSelectedObject() {
-        // Delete all selected objects
         this.selectedObjects.forEach(obj => {
             this.removeObjectFromGrid(obj);
-            this.disposeObject(obj);
+            this._disposeThreeObject(obj); // Use the new dispose helper
             const index = this.editableObjects.indexOf(obj);
             if (index > -1) this.editableObjects.splice(index, 1);
         });
@@ -1021,11 +1338,14 @@ export default class EditorState extends BaseState {
         });
     }
 
+    /**
+     * Toggles the highlight state for the given object(s).
+     * @param {THREE.Object3D | Array<THREE.Object3D>} [objects=this.selectedObjects] - Object(s) to toggle highlight for.
+     */
     toggleHighlight(objects = this.selectedObjects) {
         const targets = Array.isArray(objects) ? objects : [objects];
         targets.forEach(obj => {
             if (!obj) return;
-            // Check if any part of the object is currently highlighted
             let isHighlighted = false;
             obj.traverse(child => {
                 if (child.isMesh && child.material.isMeshBasicMaterial && child.material.wireframe) {
@@ -1041,45 +1361,64 @@ export default class EditorState extends BaseState {
         });
     }
 
+    /**
+     * Rotates all currently selected objects by 90 degrees around the Y-axis.
+     */
     rotateSelectedObject() {
         this.selectedObjects.forEach(obj => {
             obj.rotation.y += Math.PI / 2;
         });
     }
 
+    /**
+     * Disposes of a Three.js object by removing it from the scene.
+     * @param {THREE.Object3D} obj - The Three.js object to dispose.
+     */
     disposeObject(obj) {
-        if (!obj) return;
-        this.scene.remove(obj);
+        // This method is now deprecated in favor of _disposeThreeObject
+        // It's kept for compatibility if other parts of the code still call it directly.
+        console.warn("disposeObject is deprecated. Use _disposeThreeObject instead.");
+        this._disposeThreeObject(obj);
     }
 
+    /**
+     * Clears all editable objects, selections, and grid data from the scene.
+     */
     clearScene() {
         this.deselectAllObjects();
         if (this.editableObjects) {
-            this.editableObjects.forEach(obj => this.disposeObject(obj));
+            this.editableObjects.forEach(obj => this._disposeThreeObject(obj));
         }
         this.editableObjects = [];
         this.occupiedGridCells.clear();
-        if (this.previewObject) this.disposeObject(this.previewObject);
+        if (this.previewObject) this._disposeThreeObject(this.previewObject);
         if (this.previewObjects) {
-            this.previewObjects.forEach(obj => this.disposeObject(obj));
+            this.previewObjects.forEach(obj => this._disposeThreeObject(obj));
         }
         this.previewObjects = [];
+        this.mapLights = [];
     }
 
     // --- World Management ---
 
+    /**
+     * Creates a new empty world in the editor.
+     */
     createNewWorld() {
         this.clearScene();
         document.getElementById('world-name-input').value = '';
         this.showToast('New world created', 'info');
     }
 
+    /**
+     * Loads the list of available worlds from both project manifest and local storage,
+     * then populates the world list UI.
+     */
     async loadWorldList() {
         const container = document.getElementById('world-list-container');
         container.innerHTML = '';
 
         try {
-            // Add cache-busting to prevent loading old index.json
             const response = await fetch(`/public/worlds/index.json?v=${Date.now()}`, { cache: 'no-store' });
             if (response.ok) {
                 const manifestWorlds = await response.json();
@@ -1098,6 +1437,13 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Creates a group of world list items for the UI.
+     * @param {string} title - The title for the world group.
+     * @param {string[]} worldNames - An array of world names in the group.
+     * @param {'project'|'local'} source - The source of the worlds ('project' or 'local').
+     * @returns {HTMLElement} The created HTML element for the world group.
+     */
     createWorldListGroup(title, worldNames, source) {
         const group = document.createElement('div');
         group.className = 'world-list-group';
@@ -1114,7 +1460,7 @@ export default class EditorState extends BaseState {
             const icon = document.createElement('span');
             icon.className = 'material-icons';
             icon.textContent = source === 'local' ? 'storage' : 'folder';
-            
+
             const text = document.createElement('span');
             text.textContent = worldName;
 
@@ -1126,6 +1472,11 @@ export default class EditorState extends BaseState {
     }
 
 
+    /**
+     * Loads a world from a specified source (local storage or project files).
+     * @param {'local'|'project'} source - The source to load the world from.
+     * @param {string} worldName - The name of the world to load.
+     */
     async loadWorld(source, worldName) {
         try {
             let worldData;
@@ -1156,10 +1507,15 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Processes and loads world data into the editor scene.
+     * Clears the current scene and places objects defined in the world data.
+     * @param {object} worldData - The world data object containing objects to place.
+     * @param {string} worldName - The name of the world being loaded.
+     */
     async loadWorldData(worldData, worldName) {
         this.clearScene();
         document.getElementById('world-name-input').value = worldName;
-        // Use Promise.all to place objects in parallel
         await Promise.all(worldData.objects.map(objData => this.placeObject(
             objData.path,
             objData.position.x,
@@ -1171,6 +1527,10 @@ export default class EditorState extends BaseState {
         )));
     }
 
+    /**
+     * Retrieves all saved worlds from the browser's local storage.
+     * @returns {object} An object where keys are world names and values are world data.
+     */
     getLocalStorageWorlds() {
         try {
             const worlds = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -1181,6 +1541,9 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Saves the current world state to the browser's local storage.
+     */
     saveWorldToLocalStorage() {
         const worldName = document.getElementById('world-name-input').value.trim();
         if (!worldName) {
@@ -1202,6 +1565,9 @@ export default class EditorState extends BaseState {
         }
     }
 
+    /**
+     * Exports the current world data as a JSON file, triggering a download.
+     */
     exportWorldToFile() {
         const worldName = document.getElementById('world-name-input').value.trim();
         if (!worldName) {
@@ -1215,7 +1581,7 @@ export default class EditorState extends BaseState {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${worldName}.json`; // Changed to worldName.json
+        a.download = `${worldName}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1224,6 +1590,11 @@ export default class EditorState extends BaseState {
         this.showToast(`Exported '${worldName}' as ${worldName}.json`, 'info');
     }
 
+    /**
+     * Serializes the current state of editable objects in the scene into a world data format.
+     * Only includes objects marked as editable assets.
+     * @returns {object} The serialized world data.
+     */
     serializeWorld() {
         const worldData = { objects: [] };
         if (this.editableObjects) {
@@ -1245,9 +1616,23 @@ export default class EditorState extends BaseState {
         return worldData;
     }
 
+    /**
+     * Transitions the game to a 'CustomWorld' state, loading the current editor world for testing.
+     */
     testWorld() {
         const worldData = this.serializeWorld();
         const worldName = document.getElementById('world-name-input').value.trim() || 'Test World';
         this.game.stateManager.setState('CustomWorld', { worldData, worldName, isTest: true });
+    }
+
+    /**
+     * Toggles the visibility of map-specific lights in the scene.
+     */
+    toggleMapLights() {
+        this.mapLightsEnabled = !this.mapLightsEnabled;
+        this.mapLights.forEach(light => {
+            light.visible = this.mapLightsEnabled;
+        });
+        this.showToast(`Map lights ${this.mapLightsEnabled ? 'enabled' : 'disabled'}`, 'info');
     }
 }
