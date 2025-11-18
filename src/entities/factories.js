@@ -152,14 +152,18 @@ export async function createStaticObject(game, scene, objectData, loader) {
                     lightData.distance,
                     lightData.decay,
                 );
+                light.position.set(0, 2, 0);
                 break;
             case 'spot':
-                light = new THREE.PointLight(
+                light = new THREE.SpotLight(
                     lightData.color,
                     lightData.intensity,
                     lightData.distance,
+                    lightData.angle,
+                    lightData.penumbra,
                     lightData.decay,
                 );
+                light.position.set(0, 2, 0);
                 break;
             case 'rectArea':
                 light = new THREE.RectAreaLight(

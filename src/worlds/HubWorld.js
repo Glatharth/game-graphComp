@@ -15,7 +15,7 @@ export default class HubWorld {
 
         this.player = new Player(this.scene);
 
-        const light = new THREE.AmbientLight(0x404040);
+        const light = new THREE.AmbientLight(0xcccccc, 0.5);
         this.scene.add(light);
 
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
