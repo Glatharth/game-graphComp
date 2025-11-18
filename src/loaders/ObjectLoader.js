@@ -33,7 +33,7 @@ export default class ObjectLoader {
      */
     async loadAnimationData(path) {
         try {
-            const response = await fetch(path);
+            const response = await fetch(`${path}?v=${Date.now()}`, { cache: 'no-store' });
             const animationFile = await response.json();
             for (const category in animationFile) {
                 for (const key in animationFile[category]) {
@@ -71,7 +71,7 @@ export default class ObjectLoader {
      */
     async loadWorldData(worldName) {
         try {
-            const response = await fetch(`./assets/worlds/${worldName}.json`);
+            const response = await fetch(`/public/worlds/${worldName}.json?v=${Date.now()}`, { cache: 'no-store' });
             return await response.json();
         } catch (error) {
             console.error(`Error loading world data for ${worldName}:`, error);

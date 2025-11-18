@@ -27,10 +27,16 @@ window.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'e') {
         e.preventDefault();
         const currentState = game.stateManager.currentState;
-        if (currentState !== editor) {
-            game.stateManager.setState('Editor');
+        if (currentState instanceof EditorState) {
+            // If we are in the editor, switch to test mode with the current data
+            currentState.testWorld();
+        } else if (currentState instanceof CustomWorldState && currentState.isTest) {
+            // If we are in a test world, return to the editor
+            const { worldData, worldName } = currentState;
+            game.stateManager.setState('Editor', { worldData, worldName });
         } else {
-            game.stateManager.setState('CustomWorld');
+            // Otherwise, just open the editor
+            game.stateManager.setState('Editor');
         }
     }
 });

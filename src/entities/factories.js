@@ -71,10 +71,16 @@ export function createStaticObject(scene, objectData) {
     const entity = new Entity(scene);
     const loader = new GLTFLoader();
 
+    // Normalize modelPath if it's coming from an old save format
+    let correctedModelPath = objectData.path;
     loader.load(
-        objectData.path,
+        correctedModelPath,
         (gltf) => {
             const model = gltf.scene;
+            // Only add to scene if scene is still active
+            if (scene) {
+                scene.add(model);
+            }
             entity.sceneObject.add(model);
 
             // Set position, rotation, and scale from the object data
@@ -108,7 +114,7 @@ export function createStaticObject(scene, objectData) {
         undefined,
         (error) => {
             console.error(
-                `An error happened while loading model: ${objectData.path}`,
+                `An error happened while loading model: ${correctedModelPath}`,
                 error,
             );
         },
